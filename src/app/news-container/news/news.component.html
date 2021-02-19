@@ -1,8 +1,8 @@
-<mat-card class="news">
-  <img mat-card-image src="" alt="" />
-  <mat-card-title></mat-card-title>
+<mat-card>
+  <img mat-card-image [src]="new.urlToImage" [alt]="new.title" />
+  <mat-card-title>{{ new.source.name }}</mat-card-title>
   <mat-card-content>
-    <p></p>
+    <p>{{ new.description }}</p>
   </mat-card-content>
-  <mat-card-footer></mat-card-footer>
+  <mat-card-footer>{{ new.author }}</mat-card-footer>
 </mat-card>
