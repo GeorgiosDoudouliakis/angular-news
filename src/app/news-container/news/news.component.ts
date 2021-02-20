@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { New } from 'src/app/news.model';
 
 @Component({
   selector: 'app-news',
@@ -7,7 +6,7 @@ import { New } from 'src/app/news.model';
   styleUrls: ['./news.component.css'],
 })
 export class NewsComponent {
-  @Input() new: New = {
+  @Input() new = {
     source: {
       id: '',
       name: '',
