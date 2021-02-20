@@ -1,18 +1,38 @@
 mat-card {
-  background: rgb(235, 235, 235);
   border-radius: 5px;
+  padding: 0;
   margin-bottom: 2em;
 }
 
+.image-container {
+  width: 100%;
+  background: rgb(209, 209, 209);
+  margin-bottom: 1em;
+}
+
+.image-container img {
+  display: block;
+  width: 80%;
+  padding: 1em 0;
+  margin: auto;
+}
+
 mat-card-title {
-  font-weight: bold;
+  font-weight: 600;
+  padding-left: 0.5em;
 }
 
 mat-card-content {
-  font-weight: 100;
+  font-weight: 300;
+  padding-left: 0.5em;
+}
+
+mat-card-content p {
+  padding-left: 0.5em;
 }
 
 mat-card-footer {
   font-weight: 500;
-  padding: 0 0 1em 1em;
+  font-style: italic;
+  padding: 0 0 1em 1.5em;
 }
