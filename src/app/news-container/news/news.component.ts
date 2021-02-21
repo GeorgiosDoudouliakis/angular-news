@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { News } from 'src/app/news.model';
 
 @Component({
   selector: 'app-news',
@@ -6,17 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./news.component.css'],
 })
 export class NewsComponent {
-  @Input() new = {
-    source: {
-      id: '',
-      name: '',
-    },
-    author: '',
-    title: '',
-    description: '',
-    url: '',
-    urlToImage: '',
-    publishedAt: '',
-    content: '',
-  };
+  @Input() new?: News;
 }
