@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { News } from '../news.model';
 import { NewsService } from '../news.service';
 
@@ -8,7 +9,7 @@ import { NewsService } from '../news.service';
     <section class="news-container">
       <app-news
         class="new"
-        *ngFor="let news of newsData"
+        *ngFor="let news of newsData$ | async"
         [news]="news"
       ></app-news>
     </section>
@@ -16,13 +17,11 @@ import { NewsService } from '../news.service';
   styleUrls: ['./news-container.component.css'],
 })
 export class NewsContainerComponent implements OnInit {
-  newsData: News[] = [];
+  newsData$?: Observable<News[]>;
 
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
-    this.newsService.fetchNews().subscribe((data) => {
-      this.newsData = data.articles;
-    });
+    this.newsData$ = this.newsService.fetchNews();
   }
 }
