@@ -7,5 +7,5 @@ import { News } from 'src/app/news.model';
   styleUrls: ['./news.component.css'],
 })
 export class NewsComponent {
-  @Input() new?: News;
+  @Input() news?: News;
 }

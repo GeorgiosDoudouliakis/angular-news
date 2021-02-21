@@ -6,19 +6,23 @@ import { NewsService } from '../news.service';
   selector: 'app-news-container',
   template: `
     <section class="news-container">
-      <app-news class="new" *ngFor="let new of news" [new]="new"></app-news>
+      <app-news
+        class="new"
+        *ngFor="let news of newsData"
+        [news]="news"
+      ></app-news>
     </section>
   `,
   styleUrls: ['./news-container.component.css'],
 })
 export class NewsContainerComponent implements OnInit {
-  news: News[] = [];
+  newsData: News[] = [];
 
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
     this.newsService.fetchNews().subscribe((data) => {
-      this.news = data.articles;
+      this.newsData = data.articles;
     });
   }
 }
