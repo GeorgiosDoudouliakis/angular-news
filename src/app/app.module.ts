@@ -6,10 +6,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NewsContainerComponent } from './news-container/news-container.component';
-import { NewsComponent } from './news-container/news/news.component';
+import { SingleNewComponent } from './news-container/single-new/single-new.component';
 
 @NgModule({
-  declarations: [AppComponent, NewsContainerComponent, NewsComponent],
+  declarations: [AppComponent, NewsContainerComponent, SingleNewComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -9,13 +9,13 @@
 }
 
 @media (min-width: 768px) {
-  .new {
+  .single-new {
     width: 40%;
   }
 }
 
 @media (min-width: 1024px) {
-  .new {
+  .single-new {
     width: 30%;
   }
 }

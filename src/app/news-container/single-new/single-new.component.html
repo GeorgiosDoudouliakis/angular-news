@@ -1,0 +1,14 @@
+<mat-card>
+  <section class="image-container">
+    <img
+      mat-card-image
+      [src]="singleNew?.urlToImage"
+      [alt]="singleNew?.title"
+    />
+  </section>
+  <mat-card-title>{{ singleNew?.source?.name }}</mat-card-title>
+  <mat-card-content>
+    <p>{{ singleNew?.description }}</p>
+  </mat-card-content>
+  <mat-card-footer>-{{ singleNew?.author }}-</mat-card-footer>
+</mat-card>
