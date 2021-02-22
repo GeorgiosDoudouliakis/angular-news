@@ -1,4 +1,4 @@
-export interface News {
+export interface SingleNew {
   source: {
     id: string;
     name: string;

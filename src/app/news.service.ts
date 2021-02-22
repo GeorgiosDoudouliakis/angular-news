@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
-import { News } from './news.model';
+import { SingleNew } from './single-new.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +12,12 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(pageNum: number = 3, pageSize: number = 6): Observable<News[]> {
+  fetchNews(
+    pageNum: number = 3,
+    pageSize: number = 6
+  ): Observable<SingleNew[]> {
     return this.http
-      .get<{ articles: News[] }>(
+      .get<{ articles: SingleNew[] }>(
         `http://newsapi.org/v2/everything?q=a&apiKey=${this.apiKey}&page=${pageNum}&pageSize=${pageSize}`
       )
       .pipe(pluck('articles'));

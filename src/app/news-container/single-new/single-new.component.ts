@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { News } from 'src/app/news.model';
+import { SingleNew } from 'src/app/single-new.model';
 
 @Component({
   selector: 'app-single-new',
@@ -7,5 +7,5 @@ import { News } from 'src/app/news.model';
   styleUrls: ['./single-new.component.css'],
 })
 export class SingleNewComponent {
-  @Input() singleNew?: News;
+  @Input() singleNew?: SingleNew;
 }
