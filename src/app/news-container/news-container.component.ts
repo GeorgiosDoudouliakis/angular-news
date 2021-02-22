@@ -5,15 +5,7 @@ import { NewsService } from '../news.service';
 
 @Component({
   selector: 'app-news-container',
-  template: `
-    <section class="news-container">
-      <app-news
-        class="new"
-        *ngFor="let news of newsData$ | async"
-        [news]="news"
-      ></app-news>
-    </section>
-  `,
+  templateUrl: './news-container.component.html',
   styleUrls: ['./news-container.component.css'],
 })
 export class NewsContainerComponent implements OnInit {
