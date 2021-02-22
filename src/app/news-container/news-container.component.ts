@@ -14,6 +14,10 @@ export class NewsContainerComponent implements OnInit {
   constructor(private newsService: NewsService) {}
 
   ngOnInit(): void {
+    this.getNews();
+  }
+
+  getNews() {
     this.newsData$ = this.newsService.fetchNews();
   }
 }
