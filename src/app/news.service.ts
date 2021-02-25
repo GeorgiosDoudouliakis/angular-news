@@ -18,7 +18,7 @@ export class NewsService {
   ): Observable<SingleNew[]> {
     return this.http
       .get<{ articles: SingleNew[] }>(
-        `http://newsapi.org/v2/everything?q=a&apiKey=${this.apiKey}&page=${pageNum}&pageSize=${pageSize}`
+        `http://newsapi.org/v2/top-headlines?q=a&apiKey=${this.apiKey}&page=${pageNum}&pageSize=${pageSize}`
       )
       .pipe(pluck('articles'));
   }
