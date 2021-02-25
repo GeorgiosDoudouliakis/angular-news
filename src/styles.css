@@ -1,0 +1,16 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: rgb(233, 233, 233);
+}
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.4em;
+}
