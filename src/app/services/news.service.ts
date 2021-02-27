@@ -18,7 +18,7 @@ export class NewsService {
   ): Observable<SingleNew[]> {
     return this.http
       .get<{ articles: SingleNew[] }>(
-        `http://newsapi.org/v2/top-headlines?q=a&apiKey=${this.apiKey}&page=${pageNum}&pageSize=${pageSize}`
+        `http://newsapi.org/v2/top-headlines?q=a&apiKey=09b2a48dc89f416caada3626ec05f9eb&page=${pageNum}&pageSize=${pageSize}`
       )
       .pipe(pluck('articles'));
   }
@@ -26,7 +26,7 @@ export class NewsService {
   fetchAllNews() {
     return this.http
       .get<{ articles: SingleNew[] }>(
-        `http://newsapi.org/v2/top-headlines?q=a&apiKey=${this.apiKey}`
+        `http://newsapi.org/v2/top-headlines?q=a&apiKey=09b2a48dc89f416caada3626ec05f9eb`
       )
       .pipe(pluck('articles'));
   }
