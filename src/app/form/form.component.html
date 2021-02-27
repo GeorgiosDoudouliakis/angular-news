@@ -1,0 +1,16 @@
+<form>
+  <mat-form-field class="example-full-width">
+    <mat-icon aria-hidden="false" aria-label="Example home icon"
+      >search</mat-icon
+    >
+    <input matInput placeholder="Search Channels" />
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Choose Category</mat-label>
+    <mat-select name="food">
+      <mat-option *ngFor="let category of categories" [value]="category">
+        {{ category }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

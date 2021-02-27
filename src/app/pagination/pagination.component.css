@@ -1,4 +1,10 @@
+.pagination-container {
+  padding-bottom: 2em;
+}
+
 mat-paginator {
+  display: flex;
+  justify-content: flex-start;
   font-size: 1em;
   width: 90%;
   max-width: 1280px;
