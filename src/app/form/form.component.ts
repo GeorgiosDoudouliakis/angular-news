@@ -10,6 +10,7 @@ import { SearchNameService } from '../services/search-name.service';
 export class FormComponent implements OnInit {
   form!: FormGroup;
   categories = [
+    'none',
     'business',
     'entertainment',
     'general',

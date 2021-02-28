@@ -21,7 +21,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     NewsContainerComponent,
     SingleNewComponent,
     PaginationComponent,
-    FormComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,

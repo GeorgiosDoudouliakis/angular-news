@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EMPTY, Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CategoryNameService } from '../services/category-name.service';
 import { NewsService } from '../services/news.service';
 import { PageNumService } from '../services/page-num.service';
+import { SearchNameService } from '../services/search-name.service';
 import { SingleNew } from '../single-new.model';
 @Component({
   selector: 'app-news-container',
@@ -10,16 +11,19 @@ import { SingleNew } from '../single-new.model';
   styleUrls: ['./news-container.component.css'],
 })
 export class NewsContainerComponent implements OnInit, OnDestroy {
-  newsData$: Observable<SingleNew[]> = EMPTY;
+  newsData: SingleNew[] = [];
   pageNumber = 1;
   categoryName = '';
+  searchName = '';
   _pageNumSub!: Subscription;
   _categoryNameSub!: Subscription;
+  _searchNameSub!: Subscription;
 
   constructor(
     private newsService: NewsService,
     private pageNumService: PageNumService,
-    private categoryNameService: CategoryNameService
+    private categoryNameService: CategoryNameService,
+    private searchNameService: SearchNameService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +32,11 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     // Get the category name when category option is clicked and display the corresponding news with this category in current page
     this._categoryNameSub = this.categoryNameService.categoryNameChange.subscribe( categoryName => {
       this.categoryName = categoryName;
-      this.getNews(this.pageNumber, categoryName);
+      if(categoryName === 'none') {
+        this.getNews(this.pageNumber, '');
+      } else {
+        this.getNews(this.pageNumber, categoryName);
+      }
     })
 
     // Get the page number and display corresponding news
@@ -36,14 +44,23 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
         this.pageNumber = pageNum;
         this.getNews(pageNum);
     });
+
+    // Get the search input name and display the appropriate news in the current page and category
+    this._searchNameSub = this.searchNameService.searchNameChange.subscribe( searchName =>  {
+      this.searchName = searchName;
+      this.getNews(this.pageNumber, this.categoryName);
+    });
   }
 
   ngOnDestroy() {
     this._categoryNameSub.unsubscribe();
     this._pageNumSub.unsubscribe();
+    this._searchNameSub.unsubscribe();
   }
 
   getNews(pageNumber?: number, categoryName?: string) {
-    this.newsData$ = this.newsService.fetchNews(pageNumber, categoryName); 
+    this.newsService.fetchNews(pageNumber, categoryName).subscribe( newsData => {
+      this.newsData = newsData.filter(article => article.title.toLowerCase().trim().includes(this.searchName.toLowerCase()));
+    }); 
   }
 }
