@@ -26,13 +26,13 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      article: new FormControl(null),
+      searchName: new FormControl(null),
       category: new FormControl(null),
     });
   }
 
   searchNameChange() {
-    this.searchNameService.searchNameChangeHandler(this.form.value.article);
+    this.searchNameService.searchNameChangeHandler(this.form.value.searchName);
   }
 
   categoryChange() {
