@@ -32,6 +32,6 @@ export class PaginationComponent implements OnInit, OnDestroy {
   }
 
   pageIndexHandler(event: PageEvent) {
-    this.pageNumService.pageChange(event.pageIndex + 1);
+    this.pageNumService.pageChangeHandler(event.pageIndex + 1);
   }
 }

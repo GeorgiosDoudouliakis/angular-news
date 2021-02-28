@@ -8,4 +8,5 @@ import { SingleNew } from 'src/app/single-new.model';
 })
 export class SingleNewComponent {
   @Input() singleNew?: SingleNew;
+  notAvailableImgPath = '/assets/image_not_available.png';
 }

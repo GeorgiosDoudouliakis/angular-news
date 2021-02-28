@@ -2,7 +2,9 @@
   <section class="image-container">
     <img
       mat-card-image
-      [src]="singleNew?.urlToImage"
+      [src]="
+        singleNew?.urlToImage ? singleNew?.urlToImage : notAvailableImgPath
+      "
       [alt]="singleNew?.title"
     />
   </section>

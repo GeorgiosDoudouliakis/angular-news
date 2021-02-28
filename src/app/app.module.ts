@@ -14,6 +14,7 @@ import { FormComponent } from './form/form.component';
 import { NewsContainerComponent } from './news-container/news-container.component';
 import { SingleNewComponent } from './news-container/single-new/single-new.component';
 import { PaginationComponent } from './pagination/pagination.component';
+
 @NgModule({
   declarations: [
     AppComponent,

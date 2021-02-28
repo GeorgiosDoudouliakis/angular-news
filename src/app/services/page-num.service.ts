@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 export class PageNumService {
   pageNumberChange = new Subject<number>();
 
-  pageChange(pageNumber: number) {
+  pageChangeHandler(pageNumber: number) {
     this.pageNumberChange.next(pageNumber);
   }
 }
