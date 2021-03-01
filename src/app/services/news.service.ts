@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { pluck } from 'rxjs/operators';
-import { SingleNew } from '../single-new.model';
+import { SingleNew } from '../models/single-new.model';
 
 @Injectable({
   providedIn: 'root',

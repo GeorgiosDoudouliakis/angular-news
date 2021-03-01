@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Categories } from '../models/categories.model';
 import { CategoryNameService } from '../services/category-name.service';
 import { SearchNameService } from '../services/search-name.service';
 @Component({
@@ -9,15 +10,15 @@ import { SearchNameService } from '../services/search-name.service';
 })
 export class FormComponent implements OnInit {
   form!: FormGroup;
-  categories = [
-    'none',
-    'business',
-    'entertainment',
-    'general',
-    'health',
-    'science',
-    'sports',
-    'technology',
+  categories: Categories[] = [
+    Categories.NONE,
+    Categories.BUSINESS,
+    Categories.ENTERTAINMENT,
+    Categories.GENERAL,
+    Categories.HEALTH,
+    Categories.SCIENCE,
+    Categories.SPORTS,
+    Categories.TECHNOLOGY,
   ];
 
   constructor(

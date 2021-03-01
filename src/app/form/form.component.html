@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <mat-form-field class="example-full-width">
+  <mat-form-field class="example-full-width" class="search-field">
     <mat-icon aria-hidden="false" aria-label="Example home icon"
       >search</mat-icon
     >
@@ -10,7 +10,7 @@
       (keyup)="searchNameChange()"
     />
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="category-field">
     <mat-label>Choose Category</mat-label>
     <mat-select name="category" formControlName="category">
       <mat-option
