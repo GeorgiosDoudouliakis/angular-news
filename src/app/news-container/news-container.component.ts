@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SingleNew } from '../models/single-new.model';
-import { CategoryNameService } from '../services/category-name.service';
+import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
-import { PageNumService } from '../services/page-num.service';
-import { SearchNameService } from '../services/search-name.service';
+
 @Component({
   selector: 'app-news-container',
   templateUrl: './news-container.component.html',
@@ -21,16 +20,14 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private newsService: NewsService,
-    private pageNumService: PageNumService,
-    private categoryNameService: CategoryNameService,
-    private searchNameService: SearchNameService
+    private categoryPageSearchService: CategoryPageSearchService
   ) {}
 
   ngOnInit(): void {
     this.getNews();
 
     // Get the category name when category option is clicked and display the corresponding news with this category in current page
-    this._categoryNameSub = this.categoryNameService.categoryNameChange.subscribe(
+    this._categoryNameSub = this.categoryPageSearchService.categoryNameChange.subscribe(
       (categoryName) => {
         this.categoryName = categoryName;
         if (categoryName === 'none') {
@@ -42,7 +39,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     );
 
     // Get the page number and display corresponding news
-    this._pageNumSub = this.pageNumService.pageNumberChange.subscribe(
+    this._pageNumSub = this.categoryPageSearchService.pageNumberChange.subscribe(
       (pageNum) => {
         this.pageNumber = pageNum;
         this.getNews(pageNum);
@@ -50,7 +47,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     );
 
     // Get the search input name and display the appropriate news in the current page and category
-    this._searchNameSub = this.searchNameService.searchNameChange.subscribe(
+    this._searchNameSub = this.categoryPageSearchService.searchNameChange.subscribe(
       (searchName) => {
         this.searchName = searchName;
         this.getNews(this.pageNumber, this.categoryName);

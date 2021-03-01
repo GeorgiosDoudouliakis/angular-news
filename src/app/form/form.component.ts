@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Categories } from '../models/categories.model';
-import { CategoryNameService } from '../services/category-name.service';
-import { SearchNameService } from '../services/search-name.service';
+import { CategoryPageSearchService } from '../services/category-page-search.service';
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -21,10 +21,7 @@ export class FormComponent implements OnInit {
     Categories.TECHNOLOGY,
   ];
 
-  constructor(
-    private searchNameService: SearchNameService,
-    private categoryNameService: CategoryNameService
-  ) {}
+  constructor(private categoryPageSearchService: CategoryPageSearchService) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -34,10 +31,14 @@ export class FormComponent implements OnInit {
   }
 
   searchNameChange() {
-    this.searchNameService.searchNameChangeHandler(this.form.value.searchName);
+    this.categoryPageSearchService.searchNameChangeHandler(
+      this.form.value.searchName
+    );
   }
 
   categoryChange() {
-    this.categoryNameService.categoryChangeHandler(this.form.value.category);
+    this.categoryPageSearchService.categoryChangeHandler(
+      this.form.value.category
+    );
   }
 }

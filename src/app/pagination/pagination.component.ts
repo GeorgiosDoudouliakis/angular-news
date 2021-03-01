@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
-import { PageNumService } from '../services/page-num.service';
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
@@ -16,7 +16,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
   constructor(
     private newsService: NewsService,
-    private pageNumService: PageNumService
+    private categoryPageSearchService: CategoryPageSearchService
   ) {}
 
   ngOnInit() {
@@ -32,6 +32,6 @@ export class PaginationComponent implements OnInit, OnDestroy {
   }
 
   pageIndexHandler(event: PageEvent) {
-    this.pageNumService.pageChangeHandler(event.pageIndex + 1);
+    this.categoryPageSearchService.pageChangeHandler(event.pageIndex + 1);
   }
 }
