@@ -32,23 +32,18 @@ export class NewsContainerComponent implements OnInit {
       this.categoryName = categoryName;
       this.searchName = searchName;
       if (categoryName === 'none') {
-        this.getNews(this.pageNumber, '');
+        this.getNews(this.pageNumber, '', this.searchName);
       } else {
-        this.getNews(this.pageNumber, this.categoryName);
+        this.getNews(this.pageNumber, this.categoryName, this.searchName);
       }
     });
   }
 
-  getNews(pageNumber?: number, categoryName?: string) {
+  getNews(pageNumber?: number, categoryName?: string, searchName?: string) {
     this.newsService
-      .fetchNews(pageNumber, categoryName)
+      .fetchNews(pageNumber, categoryName, searchName)
       .subscribe((newsData) => {
-        this.newsData = newsData.filter((article) =>
-          article.title
-            .toLowerCase()
-            .trim()
-            .includes(this.searchName.toLowerCase())
-        );
+        this.newsData = newsData;
       });
   }
 }

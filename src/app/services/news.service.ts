@@ -11,10 +11,14 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(pageNum: number = 1, categoryName: string = '') {
+  fetchNews(
+    pageNum: number = 1,
+    categoryName: string = '',
+    searchName: string = 'a'
+  ) {
     return this.http
       .get<{ articles: SingleNew[] }>(
-        `http://newsapi.org/v2/top-headlines?q=a&apiKey=${this.apiKey}&page=${pageNum}&pageSize=6&category=${categoryName}`
+        `http://newsapi.org/v2/top-headlines?q=${searchName}&apiKey=${this.apiKey}&page=${pageNum}&pageSize=6&category=${categoryName}`
       )
       .pipe(pluck('articles'));
   }
