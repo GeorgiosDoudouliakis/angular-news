@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { pluck } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
+import { NewsResponse } from '../models/newsResponse.model';
 import { SingleNew } from '../models/single-new.model';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -19,11 +19,11 @@ export class NewsService {
       .pipe(pluck('articles'));
   }
 
-  fetchAllNews() {
+  fetchNumberOfNews() {
     return this.http
-      .get<{ articles: SingleNew[] }>(
+      .get<NewsResponse>(
         `http://newsapi.org/v2/top-headlines?q=a&apiKey=${this.apiKey}`
       )
-      .pipe(pluck('articles'));
+      .pipe(map((response) => +response.totalResults));
   }
 }

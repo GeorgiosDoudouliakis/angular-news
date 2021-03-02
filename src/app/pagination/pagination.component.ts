@@ -21,9 +21,9 @@ export class PaginationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._subscription = this.newsService
-      .fetchAllNews()
-      .subscribe((articlesData) => {
-        this.length = articlesData.length;
+      .fetchNumberOfNews()
+      .subscribe((articlesNumber) => {
+        this.length = articlesNumber;
       });
   }
 
