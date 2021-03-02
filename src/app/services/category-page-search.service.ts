@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryPageSearchService {
-  categoryNameChange = new Subject<string>();
-  pageNumberChange = new Subject<number>();
-  searchNameChange = new Subject<string>();
+  categoryNameChange = new BehaviorSubject('');
+  pageNumberChange = new BehaviorSubject(1);
+  searchNameChange = new BehaviorSubject('');
 
   categoryChangeHandler(categoryName: string) {
     this.categoryNameChange.next(categoryName);
