@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { combineLatest, timer } from 'rxjs';
+import { debounce } from 'rxjs/operators';
 import { SingleNew } from '../models/single-new.model';
 import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
@@ -27,16 +28,18 @@ export class NewsContainerComponent implements OnInit {
       this.categoryPageSearchService.pageNumberChange,
       this.categoryPageSearchService.categoryNameChange,
       this.categoryPageSearchService.searchNameChange,
-    ]).subscribe(([pageNum, categoryName, searchName]) => {
-      this.pageNumber = pageNum;
-      this.categoryName = categoryName;
-      this.searchName = searchName;
-      if (categoryName === 'none') {
-        this.getNews(this.pageNumber, '', this.searchName);
-      } else {
-        this.getNews(this.pageNumber, this.categoryName, this.searchName);
-      }
-    });
+    ])
+      .pipe(debounce(() => timer(200)))
+      .subscribe(([pageNum, categoryName, searchName]) => {
+        this.pageNumber = pageNum;
+        this.categoryName = categoryName;
+        this.searchName = searchName;
+        if (categoryName === 'none') {
+          this.getNews(this.pageNumber, '', this.searchName);
+        } else {
+          this.getNews(this.pageNumber, this.categoryName, this.searchName);
+        }
+      });
   }
 
   getNews(pageNumber?: number, categoryName?: string, searchName?: string) {
