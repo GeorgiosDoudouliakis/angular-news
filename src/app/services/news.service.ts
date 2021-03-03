@@ -18,7 +18,7 @@ export class NewsService {
   ) {
     return this.http
       .get<{ articles: SingleNew[] }>(
-        `http://newsapi.org/v2/top-headlines?q=${searchName}&apiKey=09b2a48dc89f416caada3626ec05f9eb&page=${pageNum}&pageSize=6&category=${categoryName}`
+        `http://newsapi.org/v2/top-headlines?q=${searchName}&apiKey=${this.apiKey}&page=${pageNum}&pageSize=6&category=${categoryName}`
       )
       .pipe(pluck('articles'));
   }
@@ -26,7 +26,7 @@ export class NewsService {
   fetchNumberOfNews() {
     return this.http
       .get<NewsResponse>(
-        `http://newsapi.org/v2/top-headlines?q=a&apiKey=09b2a48dc89f416caada3626ec05f9eb`
+        `http://newsapi.org/v2/top-headlines?q=a&apiKey=${this.apiKey}`
       )
       .pipe(map((response) => +response.totalResults));
   }
