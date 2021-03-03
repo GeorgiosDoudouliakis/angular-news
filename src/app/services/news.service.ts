@@ -13,8 +13,8 @@ export class NewsService {
 
   fetchNews(
     pageNum: number = 1,
-    categoryName: string = '',
-    searchName: string = 'a'
+    searchName: string = 'a',
+    categoryName: string = ''
   ) {
     return this.http
       .get<{ articles: SingleNew[] }>(

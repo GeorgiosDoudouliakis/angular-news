@@ -11,7 +11,6 @@ import { CategoryPageSearchService } from '../services/category-page-search.serv
 export class FormComponent implements OnInit {
   form!: FormGroup;
   categories: Categories[] = [
-    Categories.NONE,
     Categories.BUSINESS,
     Categories.ENTERTAINMENT,
     Categories.GENERAL,

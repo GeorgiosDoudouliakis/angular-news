@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { combineLatest, timer } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, Subscription, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { SingleNew } from '../models/single-new.model';
 import { CategoryPageSearchService } from '../services/category-page-search.service';
@@ -10,11 +10,12 @@ import { NewsService } from '../services/news.service';
   templateUrl: './news-container.component.html',
   styleUrls: ['./news-container.component.css'],
 })
-export class NewsContainerComponent implements OnInit {
+export class NewsContainerComponent implements OnInit, OnDestroy {
   newsData: SingleNew[] = [];
   pageNumber = 1;
   categoryName = '';
   searchName = '';
+  _subscription!: Subscription;
 
   constructor(
     private newsService: NewsService,
@@ -24,27 +25,27 @@ export class NewsContainerComponent implements OnInit {
   ngOnInit(): void {
     this.getNews();
 
-    combineLatest([
+    this._subscription = combineLatest([
       this.categoryPageSearchService.pageNumberChange,
-      this.categoryPageSearchService.categoryNameChange,
       this.categoryPageSearchService.searchNameChange,
+      this.categoryPageSearchService.categoryNameChange,
     ])
       .pipe(debounce(() => timer(200)))
-      .subscribe(([pageNum, categoryName, searchName]) => {
+      .subscribe(([pageNum, searchName, categoryName]) => {
         this.pageNumber = pageNum;
-        this.categoryName = categoryName;
         this.searchName = searchName;
-        if (categoryName === 'none') {
-          this.getNews(this.pageNumber, '', this.searchName);
-        } else {
-          this.getNews(this.pageNumber, this.categoryName, this.searchName);
-        }
+        this.categoryName = categoryName;
+        this.getNews(this.pageNumber, this.searchName, this.categoryName);
       });
   }
 
-  getNews(pageNumber?: number, categoryName?: string, searchName?: string) {
+  ngOnDestroy() {
+    this._subscription.unsubscribe();
+  }
+
+  getNews(pageNumber?: number, searchName?: string, categoryName?: string) {
     this.newsService
-      .fetchNews(pageNumber, categoryName, searchName)
+      .fetchNews(pageNumber, searchName, categoryName)
       .subscribe((newsData) => {
         this.newsData = newsData;
       });
