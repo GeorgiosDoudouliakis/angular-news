@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, Subscription, timer } from 'rxjs';
-import { debounce } from 'rxjs/operators';
+import { combineLatest, Subject, timer } from 'rxjs';
+import { debounce, takeUntil } from 'rxjs/operators';
 import { SingleNew } from '../models/single-new.model';
 import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
@@ -15,7 +15,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
   pageNumber = 1;
   categoryName = '';
   searchName = '';
-  _subscription!: Subscription;
+  destroy$ = new Subject<void>();
 
   constructor(
     private newsService: NewsService,
@@ -23,14 +23,14 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getNews();
-
-    this._subscription = combineLatest([
+    combineLatest([
       this.categoryPageSearchService.pageNumberChange,
-      this.categoryPageSearchService.searchNameChange,
+      this.categoryPageSearchService.searchNameChange.pipe(
+        debounce(() => timer(300))
+      ),
       this.categoryPageSearchService.categoryNameChange,
     ])
-      .pipe(debounce(() => timer(200)))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(([pageNum, searchName, categoryName]) => {
         this.pageNumber = pageNum;
         this.searchName = searchName;
@@ -40,10 +40,11 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  getNews(pageNumber?: number, searchName?: string, categoryName?: string) {
+  getNews(pageNumber: number, searchName: string, categoryName: string) {
     this.newsService
       .fetchNews(pageNumber, searchName, categoryName)
       .subscribe((newsData) => {

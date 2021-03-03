@@ -11,11 +11,7 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(
-    pageNum: number = 1,
-    searchName: string = 'a',
-    categoryName: string = ''
-  ) {
+  fetchNews(pageNum: number, searchName: string, categoryName: string) {
     return this.http
       .get<{ articles: SingleNew[] }>(
         `http://newsapi.org/v2/top-headlines?q=${searchName}&apiKey=${this.apiKey}&page=${pageNum}&pageSize=6&category=${categoryName}`
