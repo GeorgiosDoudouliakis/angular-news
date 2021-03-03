@@ -35,7 +35,11 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
         this.pageNumber = pageNum;
         this.searchName = searchName;
         this.categoryName = categoryName;
-        this.getNews(this.pageNumber, this.searchName, this.categoryName);
+        this.getNews(
+          this.pageNumber.toString(),
+          this.searchName,
+          this.categoryName
+        );
       });
   }
 
@@ -44,7 +48,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getNews(pageNumber: number, searchName: string, categoryName: string) {
+  getNews(pageNumber: string, searchName: string, categoryName: string) {
     this.newsService
       .fetchNews(pageNumber, searchName, categoryName)
       .subscribe((newsData) => {

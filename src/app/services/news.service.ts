@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, pluck } from 'rxjs/operators';
 import { NewsResponse } from '../models/newsResponse.model';
@@ -11,11 +11,18 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(pageNum: number, searchName: string, categoryName: string) {
+  fetchNews(pageNum: string, searchName: string, categoryName: string) {
+    let searchParams = new HttpParams();
+    searchParams = searchParams.set('q', searchName);
+    searchParams = searchParams.set('apiKey', this.apiKey);
+    searchParams = searchParams.set('page', pageNum.toString());
+    searchParams = searchParams.set('pageSize', '6');
+    searchParams = searchParams.set('category', categoryName);
+
     return this.http
-      .get<{ articles: SingleNew[] }>(
-        `http://newsapi.org/v2/top-headlines?q=${searchName}&apiKey=${this.apiKey}&page=${pageNum}&pageSize=6&category=${categoryName}`
-      )
+      .get<{ articles: SingleNew[] }>('http://newsapi.org/v2/top-headlines', {
+        params: searchParams,
+      })
       .pipe(pluck('articles'));
   }
 
