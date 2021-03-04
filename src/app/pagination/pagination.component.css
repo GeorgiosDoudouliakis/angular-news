@@ -1,0 +1,20 @@
+.pagination-container {
+  padding-bottom: 2em;
+}
+
+mat-paginator {
+  display: flex;
+  justify-content: flex-start;
+  font-size: 1em;
+  width: 90%;
+  max-width: 1280px;
+  margin: auto;
+  color: #000;
+  background: rgb(233, 233, 233);
+}
+
+@media (min-width: 1024px) {
+  mat-paginator {
+    font-size: 1.2em;
+  }
+}

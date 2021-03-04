@@ -1,23 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
-import { NewsService } from '../news.service';
-import { SingleNew } from '../single-new.model';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { combineLatest, Subject, timer } from 'rxjs';
+import { debounce, takeUntil } from 'rxjs/operators';
+import { SingleNew } from '../models/single-new.model';
+import { CategoryPageSearchService } from '../services/category-page-search.service';
+import { NewsService } from '../services/news.service';
 
 @Component({
   selector: 'app-news-container',
   templateUrl: './news-container.component.html',
   styleUrls: ['./news-container.component.css'],
 })
-export class NewsContainerComponent implements OnInit {
-  newsData$: Observable<SingleNew[]> = EMPTY;
+export class NewsContainerComponent implements OnInit, OnDestroy {
+  newsData: SingleNew[] = [];
+  pageNumber = 1;
+  categoryName = '';
+  searchName = '';
+  destroy$ = new Subject<void>();
 
-  constructor(private newsService: NewsService) {}
+  constructor(
+    private newsService: NewsService,
+    private categoryPageSearchService: CategoryPageSearchService
+  ) {}
 
   ngOnInit(): void {
-    this.getNews();
+    combineLatest([
+      this.categoryPageSearchService.pageNumberChange,
+      this.categoryPageSearchService.searchNameChange.pipe(
+        debounce(() => timer(300))
+      ),
+      this.categoryPageSearchService.categoryNameChange,
+    ])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([pageNum, searchName, categoryName]) => {
+        this.pageNumber = pageNum;
+        this.searchName = searchName;
+        this.categoryName = categoryName;
+        this.getNews(
+          this.pageNumber.toString(),
+          this.searchName,
+          this.categoryName
+        );
+      });
   }
 
-  getNews() {
-    this.newsData$ = this.newsService.fetchNews();
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  getNews(pageNumber: string, searchName: string, categoryName: string) {
+    this.newsService
+      .fetchNews(pageNumber, searchName, categoryName)
+      .subscribe((newsData) => {
+        this.newsData = newsData;
+      });
   }
 }

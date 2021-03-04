@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SingleNew } from 'src/app/single-new.model';
+import { SingleNew } from 'src/app/models/single-new.model';
 
 @Component({
   selector: 'app-single-new',
@@ -8,4 +8,5 @@ import { SingleNew } from 'src/app/single-new.model';
 })
 export class SingleNewComponent {
   @Input() singleNew?: SingleNew;
+  notAvailableImgPath = '/assets/image_not_available.png';
 }
