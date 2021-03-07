@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest, Subject, timer } from 'rxjs';
 import { debounce, takeUntil } from 'rxjs/operators';
 import { SingleNew } from '../models/single-new.model';
@@ -19,7 +20,9 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private newsService: NewsService,
-    private categoryPageSearchService: CategoryPageSearchService
+    private categoryPageSearchService: CategoryPageSearchService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,12 +38,20 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
         this.pageNumber = pageNum;
         this.searchName = searchName;
         this.categoryName = categoryName;
-        this.getNews(
-          this.pageNumber.toString(),
-          this.searchName,
-          this.categoryName
-        );
+        this.getNews(this.pageNumber, this.searchName, this.categoryName);
       });
+
+    //Initial query params
+    this.router.navigate(['./'], {
+      queryParams: {
+        page: 1,
+        search: 'a',
+      },
+      queryParamsHandling: 'merge',
+    });
+
+    // Show news based on the url
+    this.retrieveParamsAndShowNews();
   }
 
   ngOnDestroy() {
@@ -48,11 +59,25 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getNews(pageNumber: string, searchName: string, categoryName: string) {
+  private getNews(
+    pageNumber: number,
+    searchName: string,
+    categoryName: string
+  ) {
     this.newsService
       .fetchNews(pageNumber, searchName, categoryName)
       .subscribe((newsData) => {
         this.newsData = newsData;
       });
+  }
+
+  private retrieveParamsAndShowNews() {
+    this.route.queryParams.subscribe((queryParams: Params) => {
+      this.getNews(
+        queryParams['page'],
+        queryParams['search'],
+        queryParams['category']
+      );
+    });
   }
 }
