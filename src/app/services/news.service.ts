@@ -11,7 +11,11 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(pageNum: number, searchName: string, categoryName: string) {
+  fetchNews(
+    pageNum: number = 1,
+    searchName: string = 'a',
+    categoryName: string = 'general'
+  ) {
     let searchParams = new HttpParams();
     searchParams = searchParams.set('q', searchName);
     searchParams = searchParams.set('apiKey', this.apiKey);

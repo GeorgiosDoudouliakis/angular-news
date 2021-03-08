@@ -41,15 +41,6 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
         this.getNews(this.pageNumber, this.searchName, this.categoryName);
       });
 
-    //Initial query params
-    this.router.navigate(['./'], {
-      queryParams: {
-        page: 1,
-        search: 'a',
-      },
-      queryParamsHandling: 'merge',
-    });
-
     // Show news based on the url
     this.retrieveParamsAndShowNews();
   }
@@ -72,12 +63,14 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
   }
 
   private retrieveParamsAndShowNews() {
-    this.route.queryParams.subscribe((queryParams: Params) => {
-      this.getNews(
-        queryParams['page'],
-        queryParams['search'],
-        queryParams['category']
-      );
-    });
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((queryParams: Params) => {
+        this.getNews(
+          queryParams['page'] || 1,
+          queryParams['search'],
+          queryParams['category']
+        );
+      });
   }
 }
