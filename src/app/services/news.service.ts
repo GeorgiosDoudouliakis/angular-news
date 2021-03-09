@@ -16,12 +16,12 @@ export class NewsService {
     searchName: string = 'a',
     categoryName: string = 'general'
   ) {
-    let searchParams = new HttpParams();
-    searchParams = searchParams.set('q', searchName);
-    searchParams = searchParams.set('apiKey', this.apiKey);
-    searchParams = searchParams.set('page', pageNum.toString());
-    searchParams = searchParams.set('pageSize', '6');
-    searchParams = searchParams.set('category', categoryName);
+    const searchParams = new HttpParams()
+      .set('q', searchName)
+      .set('apiKey', this.apiKey)
+      .set('page', pageNum.toString())
+      .set('pageSize', '6')
+      .set('category', categoryName);
 
     return this.http
       .get<{ articles: SingleNew[] }>('http://newsapi.org/v2/top-headlines', {

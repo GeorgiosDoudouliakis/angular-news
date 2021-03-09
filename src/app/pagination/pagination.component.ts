@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
 @Component({
@@ -12,8 +13,7 @@ import { NewsService } from '../services/news.service';
 export class PaginationComponent implements OnInit, OnDestroy {
   length = 0;
   pageSize = 6;
-  pageSizeOptions: number[] = [6];
-  _subscription!: Subscription;
+  destroy$ = new Subject<void>();
 
   constructor(
     private newsService: NewsService,
@@ -22,15 +22,17 @@ export class PaginationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this._subscription = this.newsService
+    this.newsService
       .fetchNumberOfNews()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((articlesNumber) => {
         this.length = articlesNumber;
       });
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   pageIndexHandler(event: PageEvent) {

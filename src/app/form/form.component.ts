@@ -11,15 +11,7 @@ import { CategoryPageSearchService } from '../services/category-page-search.serv
 })
 export class FormComponent implements OnInit {
   form!: FormGroup;
-  categories: Categories[] = [
-    Categories.BUSINESS,
-    Categories.ENTERTAINMENT,
-    Categories.GENERAL,
-    Categories.HEALTH,
-    Categories.SCIENCE,
-    Categories.SPORTS,
-    Categories.TECHNOLOGY,
-  ];
+  categories: string[] = [];
 
   constructor(
     private categoryPageSearchService: CategoryPageSearchService,
@@ -27,6 +19,10 @@ export class FormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    for (let categoryOption in Categories) {
+      this.categories.push(categoryOption.toLowerCase());
+    }
+
     this.form = new FormGroup({
       searchName: new FormControl(null),
       category: new FormControl(null),
