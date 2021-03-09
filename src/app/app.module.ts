@@ -14,6 +14,7 @@ import { FormComponent } from './form/form.component';
 import { NewsContainerComponent } from './news-container/news-container.component';
 import { SingleNewComponent } from './news-container/single-new/single-new.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     SingleNewComponent,
     PaginationComponent,
     FormComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,7 @@
 
 @media (min-width: 768px) {
   .news-container {
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
 
   .single-new {
