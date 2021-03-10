@@ -1,0 +1,35 @@
+<header>
+  <img class="hero-img" src="/assets/hero_img.jpg" alt="hero image" />
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        class="mobile-menu-icon"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <section class="profile-settings">
+        <div class="user-name-container">LC</div>
+        <span>Hi Lara!</span>
+        <button class="menu-btn" mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+      </section>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <span>Settings</span>
+        </button>
+        <button mat-menu-item>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <section class="profile-info">
+    <section class="profile-img-container">
+      <img class="profile-img" src="/assets/lara-croft.jpg" alt="lara croft" />
+    </section>
+    <span>Lara Croft</span>
+  </section>
+</header>

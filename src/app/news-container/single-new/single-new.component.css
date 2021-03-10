@@ -20,11 +20,13 @@ mat-card {
 mat-card-title {
   font-weight: 600;
   padding-left: 0.5em;
+  color: rgb(51, 51, 51);
 }
 
 mat-card-content {
   font-weight: 300;
   padding: 0 0.5em 1em 0.5em;
+  color: rgb(133, 133, 133);
 }
 
 mat-card-content p {
