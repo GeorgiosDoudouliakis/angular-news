@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { combineLatest, Subject, timer } from 'rxjs';
 import { debounce, takeUntil } from 'rxjs/operators';
 import { SingleNew } from '../models/single-new.model';
@@ -21,8 +21,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
   constructor(
     private newsService: NewsService,
     private categoryPageSearchService: CategoryPageSearchService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -57,8 +56,9 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
   ) {
     this.newsService
       .fetchNews(pageNumber, searchName, categoryName)
-      .subscribe((newsData) => {
-        this.newsData = newsData;
+      .subscribe((responseData) => {
+        this.newsData = responseData.articles;
+        this.newsService.newsNumberHandler(+responseData.totalResults);
       });
   }
 

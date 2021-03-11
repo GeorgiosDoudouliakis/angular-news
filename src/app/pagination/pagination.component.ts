@@ -22,12 +22,9 @@ export class PaginationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.newsService
-      .fetchNumberOfNews()
+    this.newsService.newsNumber
       .pipe(takeUntil(this.destroy$))
-      .subscribe((articlesNumber) => {
-        this.length = articlesNumber;
-      });
+      .subscribe((newsNum) => (this.length = newsNum));
   }
 
   ngOnDestroy() {

@@ -1,7 +1,6 @@
 import { SingleNew } from '../models/single-new.model';
 
-export interface NewsResponse {
-  status: string;
-  totalResults: string;
+export interface News {
+  totalResults: number;
   articles: SingleNew[];
 }

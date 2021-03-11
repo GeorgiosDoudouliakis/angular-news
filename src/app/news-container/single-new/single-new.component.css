@@ -1,14 +1,15 @@
 mat-card {
   border-radius: 5px;
   padding: 0;
-  margin-bottom: 2em;
-  height: 450px;
+  height: 100%;
 }
 
 .image-container {
   width: 100%;
   background: rgb(209, 209, 209);
   margin-bottom: 1em;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .image-container img {

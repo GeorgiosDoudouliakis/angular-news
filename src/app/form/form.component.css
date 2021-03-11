@@ -8,15 +8,6 @@ form {
   border-bottom: 1px solid rgb(182, 182, 182);
 }
 
-.search-field {
-  position: relative;
-}
-
-mat-icon {
-  position: absolute;
-  right: 0;
-}
-
 @media (min-width: 768px) {
   form {
     flex-direction: row;
