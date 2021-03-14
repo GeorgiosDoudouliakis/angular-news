@@ -33,7 +33,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
   }
 
   pageIndexHandler(event: PageEvent) {
-    this.categoryPageSearchService.pageChangeHandler(event.pageIndex + 1);
+    this.categoryPageSearchService.pageChangeHandler(event.pageIndex);
     this.router.navigate(['/main-page'], {
       queryParams: { page: event.pageIndex + 1 },
       queryParamsHandling: 'merge',
