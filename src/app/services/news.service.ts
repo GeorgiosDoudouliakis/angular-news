@@ -14,11 +14,11 @@ export class NewsService {
   fetchNews(
     pageNum: number = 1,
     searchName: string = 'a',
-    categoryName: string = 'general'
+    categoryName: string = ''
   ): Observable<News> {
     const searchParams = new HttpParams()
       .set('q', searchName)
-      .set('apiKey', '09b2a48dc89f416caada3626ec05f9eb')
+      .set('apiKey', this.apiKey)
       .set('page', pageNum.toString())
       .set('pageSize', '6')
       .set('category', categoryName);

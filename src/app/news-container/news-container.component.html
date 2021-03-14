@@ -1,7 +1,14 @@
-<section class="news-container">
+<section
+  class="no-results-indicator"
+  *ngIf="newsData?.length === 0 && !loading"
+>
+  <p>No results found!</p>
+</section>
+<section class="news-container" *ngIf="newsData?.length !== 0 && !loading">
   <app-single-new
     class="single-new"
     *ngFor="let singleNew of newsData"
     [singleNew]="singleNew"
   ></app-single-new>
 </section>
+<app-spinner *ngIf="loading"></app-spinner>

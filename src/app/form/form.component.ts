@@ -16,7 +16,7 @@ export class FormComponent implements OnInit, OnDestroy {
   categories: string[] = Object.keys(Categories).map((category) =>
     category.toLowerCase()
   );
-  destroy$ = new Subject<void>();
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private categoryPageSearchService: CategoryPageSearchService,
@@ -25,8 +25,8 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      searchName: new FormControl(null),
-      category: new FormControl(null),
+      searchName: new FormControl('a'),
+      category: new FormControl(''),
     });
 
     this.form.valueChanges
@@ -44,6 +44,10 @@ export class FormComponent implements OnInit, OnDestroy {
           queryParamsHandling: 'merge',
         });
       });
+
+    // this.categoryPageSearchService.formValueChange.subscribe((formValues) =>
+    //   this.form.setValue(formValues)
+    // );
   }
 
   ngOnDestroy() {
