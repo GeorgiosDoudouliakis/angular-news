@@ -33,10 +33,6 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
       .pipe(withLatestFrom(this.route.queryParams), takeUntil(this.destroy$))
       .subscribe(([[pageNum, searchName, categoryName], params]) => {
         if (params.search || params.category || params.page) {
-          this.categoryPageSearchService.formValueChangeHandler({
-            searchName: params.search || 'a',
-            category: params.category || '',
-          });
           this.getNews(params.page, params.search, params.category);
         } else {
           this.getNews(pageNum, searchName, categoryName);

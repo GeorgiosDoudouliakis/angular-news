@@ -44,10 +44,6 @@ export class FormComponent implements OnInit, OnDestroy {
           queryParamsHandling: 'merge',
         });
       });
-
-    // this.categoryPageSearchService.formValueChange.subscribe((formValues) =>
-    //   this.form.setValue(formValues)
-    // );
   }
 
   ngOnDestroy() {
