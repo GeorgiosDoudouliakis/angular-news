@@ -4,9 +4,9 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CategoryPageSearchService {
-  pageNumberChange = new BehaviorSubject(1);
-  searchNameChange = new BehaviorSubject('a');
-  categoryNameChange = new BehaviorSubject('');
+  readonly pageNumberChange = new BehaviorSubject(1);
+  readonly searchNameChange = new BehaviorSubject('a');
+  readonly categoryNameChange = new BehaviorSubject('');
 
   pageChangeHandler(pageNumber: number) {
     this.pageNumberChange.next(pageNumber);

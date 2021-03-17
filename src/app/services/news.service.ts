@@ -7,7 +7,7 @@ import { News } from '../models/news.model';
 })
 export class NewsService {
   private apiKey = '9cd9fac8c8e8487f90103d97de7b4140';
-  newsNumber = new Subject<number>();
+  readonly newsNumber = new Subject<number>();
 
   constructor(private http: HttpClient) {}
 
