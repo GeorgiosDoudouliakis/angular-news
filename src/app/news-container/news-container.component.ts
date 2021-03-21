@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Subject, timer } from 'rxjs';
-import { debounce, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { FormValues } from '../models/form-values.model';
 import { SingleNew } from '../models/single-new.model';
 import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
@@ -12,7 +13,7 @@ import { NewsService } from '../services/news.service';
   styleUrls: ['./news-container.component.css'],
 })
 export class NewsContainerComponent implements OnInit, OnDestroy {
-  newsData?: SingleNew[];
+  newsData: SingleNew[] = [];
   loading = false;
   private readonly destroy$ = new Subject<void>();
 
@@ -23,20 +24,15 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
-      this.categoryPageSearchService.pageNumberChange,
-      this.categoryPageSearchService.searchNameChange.pipe(
-        debounce(() => timer(300))
-      ),
-      this.categoryPageSearchService.categoryNameChange,
-    ])
-      .pipe(withLatestFrom(this.route.queryParams), takeUntil(this.destroy$))
-      .subscribe(([[pageNum, searchName, categoryName], params]) => {
-        if (params.search || params.category || params.page) {
-          this.getNews(params.page, params.search, params.category);
-        } else {
-          this.getNews(pageNum, searchName, categoryName);
-        }
+    this.getNews(1, { searchName: 'a', category: '' });
+
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        this.getNews(params.page, {
+          searchName: params.search,
+          category: params.category,
+        });
       });
   }
 
@@ -45,14 +41,10 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getNews(
-    pageNumber: number,
-    searchName: string,
-    categoryName: string
-  ) {
+  private getNews(pageNumber: number, formChanges: FormValues) {
     this.loading = true;
     this.newsService
-      .fetchNews(pageNumber, searchName, categoryName)
+      .fetchNews(pageNumber, formChanges)
       .subscribe((responseData) => {
         this.newsData = responseData.articles;
         this.newsService.newsNumberHandler(+responseData.totalResults);

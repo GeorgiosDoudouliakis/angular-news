@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Categories } from '../models/categories.model';
-import { CategoryPageSearchService } from '../services/category-page-search.service';
 
 @Component({
   selector: 'app-form',
@@ -18,10 +17,7 @@ export class FormComponent implements OnInit, OnDestroy {
   );
   private readonly destroy$ = new Subject<void>();
 
-  constructor(
-    private categoryPageSearchService: CategoryPageSearchService,
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -32,10 +28,6 @@ export class FormComponent implements OnInit, OnDestroy {
     this.form.valueChanges
       .pipe(takeUntil(this.destroy$))
       .subscribe((changes) => {
-        this.categoryPageSearchService.searchNameChangeHandler(
-          changes.searchName
-        );
-        this.categoryPageSearchService.categoryChangeHandler(changes.category);
         this.router.navigate(['/main-page'], {
           queryParams: {
             search: changes.searchName,

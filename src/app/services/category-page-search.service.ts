@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { FormValues } from '../models/form-values.model';
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryPageSearchService {
-  readonly pageNumberChange = new BehaviorSubject(1);
-  readonly searchNameChange = new BehaviorSubject('a');
-  readonly categoryNameChange = new BehaviorSubject('');
+  readonly pageNumberChange = new BehaviorSubject(0);
+  readonly formChange = new BehaviorSubject({
+    searchName: 'a',
+    category: '',
+  });
 
   pageChangeHandler(pageNumber: number) {
     this.pageNumberChange.next(pageNumber);
   }
 
-  searchNameChangeHandler(input: string) {
-    this.searchNameChange.next(input);
-  }
-
-  categoryChangeHandler(categoryName: string) {
-    this.categoryNameChange.next(categoryName);
+  formChangeHandler(formValues: FormValues) {
+    this.formChange.next(formValues);
   }
 }
