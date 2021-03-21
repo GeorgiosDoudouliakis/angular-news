@@ -18,7 +18,7 @@ export class NewsService {
   ): Observable<News> {
     const searchParams = new HttpParams()
       .set('q', formChanges.searchName)
-      .set('apiKey', '09b2a48dc89f416caada3626ec05f9eb')
+      .set('apiKey', this.apiKey)
       .set('page', pageNum.toString())
       .set('pageSize', '6')
       .set('category', formChanges.category);

@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Categories } from '../models/categories.model';
-import { CategoryPageSearchService } from '../services/category-page-search.service';
 
 @Component({
   selector: 'app-form',
@@ -18,10 +17,7 @@ export class FormComponent implements OnInit, OnDestroy {
   );
   private readonly destroy$ = new Subject<void>();
 
-  constructor(
-    private categoryPageSearchService: CategoryPageSearchService,
-    private router: Router
-  ) {}
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -40,6 +36,13 @@ export class FormComponent implements OnInit, OnDestroy {
           queryParamsHandling: 'merge',
         });
       });
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.form.setValue({
+        searchName: params.search || 'a',
+        category: params.category || '',
+      });
+    });
   }
 
   ngOnDestroy() {
