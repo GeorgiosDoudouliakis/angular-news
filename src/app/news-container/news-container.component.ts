@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormValues } from '../models/form-values.model';
 import { SingleNew } from '../models/single-new.model';
+import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private newsService: NewsService,
+    private categoryPageSearchService: CategoryPageSearchService,
     private route: ActivatedRoute
   ) {}
 
@@ -28,6 +30,11 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
         if (Object.keys(params).length === 0) {
           this.getNews(1, { searchName: 'a', category: '' });
         } else {
+          this.categoryPageSearchService.pageChangeHandler(params.page);
+          this.categoryPageSearchService.formChangeHandler({
+            searchName: params.search,
+            category: params.category,
+          });
           this.getNews(params.page, {
             searchName: params.search,
             category: params.category,
