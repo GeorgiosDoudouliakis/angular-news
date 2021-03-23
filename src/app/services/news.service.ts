@@ -14,14 +14,17 @@ export class NewsService {
 
   fetchNews(
     pageNum: number = 1,
-    formChanges: FormValues = { searchName: 'a', category: '' }
+    formChanges: FormValues = { searchName: 'a' }
   ): Observable<News> {
-    const searchParams = new HttpParams()
+    let searchParams = new HttpParams()
       .set('q', formChanges.searchName)
       .set('apiKey', this.apiKey)
       .set('page', pageNum.toString())
-      .set('pageSize', '6')
-      .set('category', formChanges.category);
+      .set('pageSize', '6');
+
+    if (formChanges.category && formChanges.category !== '') {
+      searchParams = searchParams.set('category', formChanges.category);
+    }
 
     return this.http.get<News>('http://newsapi.org/v2/top-headlines', {
       params: searchParams,

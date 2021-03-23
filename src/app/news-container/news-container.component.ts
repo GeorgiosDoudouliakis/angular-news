@@ -25,8 +25,8 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
-        if (Object.keys(params).length === 0) {
-          this.getNews(1, { searchName: 'a', category: '' });
+        if (params.search === 'a' && !params.category) {
+          this.getNews(1, { searchName: 'a' });
         } else {
           this.getNews(params.page, {
             searchName: params.search,
@@ -43,12 +43,16 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
 
   private getNews(pageNumber: number, formChanges: FormValues) {
     this.loading = true;
-    this.newsService
-      .fetchNews(pageNumber, formChanges)
-      .subscribe((responseData) => {
-        this.newsData = responseData.articles;
-        this.newsService.newsNumberHandler(+responseData.totalResults);
-        this.loading = false;
-      });
+    if (!formChanges.searchName) {
+      return;
+    } else {
+      this.newsService
+        .fetchNews(pageNumber, formChanges)
+        .subscribe((responseData) => {
+          this.newsData = responseData.articles;
+          this.newsService.newsNumberHandler(+responseData.totalResults);
+          this.loading = false;
+        });
+    }
   }
 }
