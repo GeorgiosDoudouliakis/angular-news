@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { FormValues } from '../models/form-values.model';
 import { SingleNew } from '../models/single-new.model';
 import { NewsService } from '../services/news.service';
@@ -23,7 +23,10 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.queryParams
-      .pipe(takeUntil(this.destroy$))
+      .pipe(
+        filter((params) => params.search),
+        takeUntil(this.destroy$)
+      )
       .subscribe((params) => {
         if (params.search === 'a' && !params.category) {
           this.getNews(1, { searchName: 'a' });
@@ -43,16 +46,12 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
 
   private getNews(pageNumber: number, formChanges: FormValues) {
     this.loading = true;
-    if (!formChanges.searchName) {
-      return;
-    } else {
-      this.newsService
-        .fetchNews(pageNumber, formChanges)
-        .subscribe((responseData) => {
-          this.newsData = responseData.articles;
-          this.newsService.newsNumberHandler(+responseData.totalResults);
-          this.loading = false;
-        });
-    }
+    this.newsService
+      .fetchNews(pageNumber, formChanges)
+      .subscribe((responseData) => {
+        this.newsData = responseData.articles;
+        this.newsService.newsNumberHandler(+responseData.totalResults);
+        this.loading = false;
+      });
   }
 }
