@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, Subject, timer } from 'rxjs';
-import { debounce, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+import { FormValues } from '../models/form-values.model';
 import { SingleNew } from '../models/single-new.model';
-import { CategoryPageSearchService } from '../services/category-page-search.service';
 import { NewsService } from '../services/news.service';
 
 @Component({
@@ -12,34 +13,29 @@ import { NewsService } from '../services/news.service';
 })
 export class NewsContainerComponent implements OnInit, OnDestroy {
   newsData: SingleNew[] = [];
-  pageNumber = 1;
-  categoryName = '';
-  searchName = '';
-  destroy$ = new Subject<void>();
+  loading = false;
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private newsService: NewsService,
-    private categoryPageSearchService: CategoryPageSearchService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
-      this.categoryPageSearchService.pageNumberChange,
-      this.categoryPageSearchService.searchNameChange.pipe(
-        debounce(() => timer(300))
-      ),
-      this.categoryPageSearchService.categoryNameChange,
-    ])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(([pageNum, searchName, categoryName]) => {
-        this.pageNumber = pageNum;
-        this.searchName = searchName;
-        this.categoryName = categoryName;
-        this.getNews(
-          this.pageNumber.toString(),
-          this.searchName,
-          this.categoryName
-        );
+    this.route.queryParams
+      .pipe(
+        filter((params) => params.search),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((params) => {
+        if (params.search === 'a' && !params.category) {
+          this.getNews(1, { searchName: 'a' });
+        } else {
+          this.getNews(params.page, {
+            searchName: params.search,
+            category: params.category,
+          });
+        }
       });
   }
 
@@ -48,11 +44,14 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getNews(pageNumber: string, searchName: string, categoryName: string) {
+  private getNews(pageNumber: number, formChanges: FormValues) {
+    this.loading = true;
     this.newsService
-      .fetchNews(pageNumber, searchName, categoryName)
-      .subscribe((newsData) => {
-        this.newsData = newsData;
+      .fetchNews(pageNumber, formChanges)
+      .subscribe((responseData) => {
+        this.newsData = responseData.articles;
+        this.newsService.newsNumberHandler(+responseData.totalResults);
+        this.loading = false;
       });
   }
 }

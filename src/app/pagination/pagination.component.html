@@ -1,8 +1,8 @@
 <section class="pagination-container">
   <mat-paginator
     [length]="length"
+    [pageIndex]="pageIndex"
     [pageSize]="pageSize"
-    [pageSizeOptions]="pageSizeOptions"
     (page)="pageIndexHandler($event)"
   >
   </mat-paginator>

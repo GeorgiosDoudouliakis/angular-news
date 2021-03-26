@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Subscription } from 'rxjs';
-import { CategoryPageSearchService } from '../services/category-page-search.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NewsService } from '../services/news.service';
 @Component({
   selector: 'app-pagination',
@@ -10,28 +11,35 @@ import { NewsService } from '../services/news.service';
 })
 export class PaginationComponent implements OnInit, OnDestroy {
   length = 0;
+  pageIndex = 0;
   pageSize = 6;
-  pageSizeOptions: number[] = [6];
-  _subscription!: Subscription;
+  destroy$ = new Subject<void>();
 
   constructor(
     private newsService: NewsService,
-    private categoryPageSearchService: CategoryPageSearchService
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this._subscription = this.newsService
-      .fetchNumberOfNews()
-      .subscribe((articlesNumber) => {
-        this.length = articlesNumber;
-      });
+    this.newsService.newsNumber
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((newsNum) => (this.length = newsNum));
+
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => (this.pageIndex = params.page - 1));
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   pageIndexHandler(event: PageEvent) {
-    this.categoryPageSearchService.pageChangeHandler(event.pageIndex + 1);
+    this.router.navigate(['/main-page'], {
+      queryParams: { page: event.pageIndex + 1 },
+      queryParamsHandling: 'merge',
+    });
   }
 }

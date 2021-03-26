@@ -1,43 +1,52 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Categories } from '../models/categories.model';
-import { CategoryPageSearchService } from '../services/category-page-search.service';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.css'],
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
-  categories: Categories[] = [
-    Categories.BUSINESS,
-    Categories.ENTERTAINMENT,
-    Categories.GENERAL,
-    Categories.HEALTH,
-    Categories.SCIENCE,
-    Categories.SPORTS,
-    Categories.TECHNOLOGY,
-  ];
+  categories: string[] = Object.keys(Categories).map((category) =>
+    category.toLowerCase()
+  );
+  private readonly destroy$ = new Subject<void>();
 
-  constructor(private categoryPageSearchService: CategoryPageSearchService) {}
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      searchName: new FormControl(null),
+      searchName: new FormControl('a'),
       category: new FormControl(null),
+    });
+
+    this.form.valueChanges
+      .pipe(debounceTime(300), takeUntil(this.destroy$))
+      .subscribe((changes) => {
+        this.router.navigate(['/main-page'], {
+          queryParams: {
+            search: changes.searchName,
+            category: changes.category,
+          },
+          queryParamsHandling: 'merge',
+        });
+      });
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.form.setValue({
+        searchName: params.search || 'a',
+        category: params.category || null,
+      });
     });
   }
 
-  searchNameChange() {
-    this.categoryPageSearchService.searchNameChangeHandler(
-      this.form.value.searchName
-    );
-  }
-
-  categoryChange() {
-    this.categoryPageSearchService.categoryChangeHandler(
-      this.form.value.category
-    );
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

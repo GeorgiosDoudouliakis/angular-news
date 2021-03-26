@@ -5,15 +5,7 @@ form {
   max-width: 1280px;
   padding-top: 2em;
   margin: auto;
-}
-
-.search-field {
-  position: relative;
-}
-
-mat-icon {
-  position: absolute;
-  right: 0;
+  border-bottom: 1px solid rgb(182, 182, 182);
 }
 
 @media (min-width: 768px) {

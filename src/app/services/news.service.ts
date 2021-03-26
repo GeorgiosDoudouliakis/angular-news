@@ -1,36 +1,37 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, pluck } from 'rxjs/operators';
-import { NewsResponse } from '../models/newsResponse.model';
-import { SingleNew } from '../models/single-new.model';
+import { Observable, Subject } from 'rxjs';
+import { FormValues } from '../models/form-values.model';
+import { News } from '../models/news.model';
 @Injectable({
   providedIn: 'root',
 })
 export class NewsService {
-  private apiKey = '9cd9fac8c8e8487f90103d97de7b4140';
+  private readonly apiKey = '9cd9fac8c8e8487f90103d97de7b4140';
+  readonly newsNumber = new Subject<number>();
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(pageNum: string, searchName: string, categoryName: string) {
-    let searchParams = new HttpParams();
-    searchParams = searchParams.set('q', searchName);
-    searchParams = searchParams.set('apiKey', this.apiKey);
-    searchParams = searchParams.set('page', pageNum.toString());
-    searchParams = searchParams.set('pageSize', '6');
-    searchParams = searchParams.set('category', categoryName);
+  fetchNews(
+    pageNum: number = 1,
+    formChanges: FormValues = { searchName: 'a' }
+  ): Observable<News> {
+    let searchParams = new HttpParams()
+      .set('q', formChanges.searchName)
+      .set('apiKey', this.apiKey)
+      .set('page', pageNum.toString())
+      .set('pageSize', '6');
 
-    return this.http
-      .get<{ articles: SingleNew[] }>('http://newsapi.org/v2/top-headlines', {
-        params: searchParams,
-      })
-      .pipe(pluck('articles'));
+    if (formChanges.category && formChanges.category !== '') {
+      searchParams = searchParams.set('category', formChanges.category);
+    }
+
+    return this.http.get<News>('http://newsapi.org/v2/top-headlines', {
+      params: searchParams,
+    });
   }
 
-  fetchNumberOfNews() {
-    return this.http
-      .get<NewsResponse>(
-        `http://newsapi.org/v2/top-headlines?q=a&apiKey=${this.apiKey}`
-      )
-      .pipe(map((response) => +response.totalResults));
+  newsNumberHandler(newsNum: number) {
+    this.newsNumber.next(newsNum);
   }
 }
