@@ -6,8 +6,9 @@
       [alt]="singleNew?.title"
     />
   </section>
-  <mat-card-title>{{ singleNew?.source?.name }}</mat-card-title>
+  <mat-card-title>{{ singleNew?.title }}</mat-card-title>
   <mat-card-content>
     <p>{{ singleNew?.description }}</p>
   </mat-card-content>
+  <a [href]="singleNew?.url" target="_blank">Δες το άρθρο</a>
 </mat-card>
