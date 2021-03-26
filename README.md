@@ -10,6 +10,6 @@ You can search by word (with the default search corresponding to 'a' due to prer
 - sports
 - technology
 
-Angular Material has been used for hte UI design.
+Angular Material has been used for the UI design.
 
 Angular version: 11.1.4
