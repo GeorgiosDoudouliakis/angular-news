@@ -25,7 +25,6 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParams
       .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
-        console.log(params);
         if (Object.keys(params).length === 0) {
           this.getNews(1);
         } else if (params.page && !params.searchName && !params.category) {
