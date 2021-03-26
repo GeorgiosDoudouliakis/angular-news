@@ -12,17 +12,18 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(
-    pageNum: number = 1,
-    formChanges: FormValues = { searchName: 'a' }
-  ): Observable<News> {
+  fetchNews(pageNum: number = 1, formChanges?: FormValues): Observable<News> {
     let searchParams = new HttpParams()
-      .set('q', formChanges.searchName)
+      .set('country', 'gr')
       .set('apiKey', this.apiKey)
       .set('page', pageNum.toString())
       .set('pageSize', '6');
 
-    if (formChanges.category && formChanges.category !== '') {
+    if (formChanges?.searchName && formChanges?.searchName !== '') {
+      searchParams = searchParams.set('q', formChanges.searchName);
+    }
+
+    if (formChanges?.category && formChanges?.category !== '') {
       searchParams = searchParams.set('category', formChanges.category);
     }
 

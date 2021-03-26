@@ -1,4 +1,4 @@
 export interface FormValues {
-  searchName: string;
+  searchName?: string;
   category?: string;
 }

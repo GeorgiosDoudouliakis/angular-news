@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { FormValues } from '../models/form-values.model';
 import { SingleNew } from '../models/single-new.model';
 import { NewsService } from '../services/news.service';
@@ -18,18 +18,15 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
 
   constructor(
     private newsService: NewsService,
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams
-      .pipe(
-        filter((params) => params.search),
-        takeUntil(this.destroy$)
-      )
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.destroy$))
       .subscribe((params) => {
-        if (params.search === 'a' && !params.category) {
-          this.getNews(1, { searchName: 'a' });
+        if (!params.searchName && !params.category) {
+          this.getNews(1);
         } else {
           this.getNews(params.page, {
             searchName: params.search,
@@ -44,7 +41,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getNews(pageNumber: number, formChanges: FormValues) {
+  private getNews(pageNumber: number, formChanges?: FormValues) {
     this.loading = true;
     this.newsService
       .fetchNews(pageNumber, formChanges)

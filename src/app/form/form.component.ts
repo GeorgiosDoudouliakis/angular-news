@@ -21,7 +21,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      searchName: new FormControl('a'),
+      searchName: new FormControl(null),
       category: new FormControl(null),
     });
 
@@ -38,8 +38,8 @@ export class FormComponent implements OnInit, OnDestroy {
       });
 
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.form.setValue({
-        searchName: params.search || 'a',
+      this.form?.setValue({
+        searchName: params.search || null,
         category: params.category || null,
       });
     });
