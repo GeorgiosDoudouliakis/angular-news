@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormValues } from '../models/form-values.model';
-import { SingleNew } from '../models/single-new.model';
-import { NewsService } from '../services/news.service';
+import { FormValues } from '../../models/form-values.model';
+import { SingleNew } from '../../models/single-new.model';
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-news-container',

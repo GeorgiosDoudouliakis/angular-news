@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NewsService } from '../services/news.service';
+import { NewsService } from '../../services/news.service';
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',

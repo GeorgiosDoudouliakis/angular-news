@@ -12,13 +12,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './footer/footer.component';
-import { FormComponent } from './form/form.component';
-import { HeaderComponent } from './header/header.component';
-import { NewsContainerComponent } from './news-container/news-container.component';
-import { SingleNewComponent } from './news-container/single-new/single-new.component';
-import { PaginationComponent } from './pagination/pagination.component';
+import { IntroComponent } from './intro/intro.component';
+import { FooterComponent } from './main-page/footer/footer.component';
+import { FormComponent } from './main-page/form/form.component';
+import { HeaderComponent } from './main-page/header/header.component';
+import { NewsContainerComponent } from './main-page/news-container/news-container.component';
+import { SingleNewComponent } from './main-page/news-container/single-new/single-new.component';
+import { PaginationComponent } from './main-page/pagination/pagination.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { MainPageComponent } from './main-page/main-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     FooterComponent,
     HeaderComponent,
     SpinnerComponent,
+    IntroComponent,
+    MainPageComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { Categories } from '../models/categories.model';
+import { Categories } from '../../models/categories.model';
 
 @Component({
   selector: 'app-form',
