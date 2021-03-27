@@ -14,3 +14,15 @@ body {
   box-sizing: border-box;
   line-height: 1.4em;
 }
+
+/* Overwriting Material styles */
+.mat-paginator-page-size-label,
+.mat-paginator-page-size-value {
+  display: none;
+}
+
+.mat-paginator-range-actions {
+  padding: 0;
+  background: #d1d1d1;
+  border-radius: 5px;
+}
