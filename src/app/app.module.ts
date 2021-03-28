@@ -9,10 +9,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IntroComponent } from './intro/intro.component';
+import { LoginFormComponent } from './login-form/login-form.component';
 import { FooterComponent } from './main-page/footer/footer.component';
 import { HeaderComponent } from './main-page/header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -21,7 +25,7 @@ import { SingleNewComponent } from './main-page/news-container/single-new/single
 import { PaginationComponent } from './main-page/pagination/pagination.component';
 import { SearchFormComponent } from './main-page/search-form/search-form.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { LoginFormComponent } from './login-form/login-form.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +53,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

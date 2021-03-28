@@ -1,10 +1,14 @@
-<section class="intro-container">
+<section
+  [@fadeOut]="animationStatus"
+  (@fadeOut.done)="goToLogin()"
+  class="intro-container"
+>
   <section class="intro">
     <div>
       <span class="breaking">BREAKING</span>
       <span class="gr">GR</span>
     </div>
     <span class="news">NEWS</span>
-    <button (click)="goToLogin()">ΣΥΝΕΧΕΙΑ</button>
+    <button (click)="fadeOutHandler()">ΣΥΝΕΧΕΙΑ</button>
   </section>
 </section>
