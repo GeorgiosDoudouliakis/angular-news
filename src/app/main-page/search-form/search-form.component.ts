@@ -6,11 +6,11 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Categories } from '../../models/categories.model';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css'],
+  selector: 'app-search-form',
+  templateUrl: './search-form.component.html',
+  styleUrls: ['./search-form.component.css'],
 })
-export class FormComponent implements OnInit, OnDestroy {
+export class SearchFormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   categories: string[] = Object.keys(Categories).map((category) =>
     category.toLowerCase()

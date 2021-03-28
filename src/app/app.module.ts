@@ -14,20 +14,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IntroComponent } from './intro/intro.component';
 import { FooterComponent } from './main-page/footer/footer.component';
-import { FormComponent } from './main-page/form/form.component';
 import { HeaderComponent } from './main-page/header/header.component';
+import { MainPageComponent } from './main-page/main-page.component';
 import { NewsContainerComponent } from './main-page/news-container/news-container.component';
 import { SingleNewComponent } from './main-page/news-container/single-new/single-new.component';
 import { PaginationComponent } from './main-page/pagination/pagination.component';
+import { SearchFormComponent } from './main-page/search-form/search-form.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { MainPageComponent } from './main-page/main-page.component';
 @NgModule({
   declarations: [
     AppComponent,
     NewsContainerComponent,
     SingleNewComponent,
     PaginationComponent,
-    FormComponent,
+    SearchFormComponent,
     FooterComponent,
     HeaderComponent,
     SpinnerComponent,
