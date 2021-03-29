@@ -45,7 +45,7 @@ export class IntroComponent {
 
   goToLogin() {
     if (this.animationStatus === 'closed') {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login-page']);
     }
   }
 }
