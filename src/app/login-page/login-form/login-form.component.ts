@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginButtonsService } from 'src/app/services/login-buttons.service';
 
 @Component({
@@ -7,7 +8,14 @@ import { LoginButtonsService } from 'src/app/services/login-buttons.service';
   styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent {
-  constructor(private loginButtonsService: LoginButtonsService) {}
+  constructor(
+    private loginButtonsService: LoginButtonsService,
+    private router: Router
+  ) {}
+
+  goToNews() {
+    this.router.navigate(['/main-page']);
+  }
 
   goBack() {
     this.loginButtonsService.goToLoginPage();

@@ -11,7 +11,14 @@
       <input type="password" matInput />
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">LOG IN</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      (click)="goToNews()"
+    >
+      LOG IN
+    </button>
   </form>
   <button mat-stroked-button class="goback-form-btn" (click)="goBack()">
     Go Back
