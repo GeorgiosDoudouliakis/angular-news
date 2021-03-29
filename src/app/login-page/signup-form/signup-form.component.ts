@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { LoginButtonsService } from 'src/app/services/login-buttons.service';
 
 @Component({
-  selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.css'],
+  selector: 'app-signup-form',
+  templateUrl: './signup-form.component.html',
+  styleUrls: ['./signup-form.component.css'],
 })
-export class LoginFormComponent {
+export class SignupFormComponent {
   constructor(private loginButtonsService: LoginButtonsService) {}
 
   goBack() {

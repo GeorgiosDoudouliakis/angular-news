@@ -5,8 +5,11 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { LoginButtonsService } from '../services/login-buttons.service';
 
 @Component({
   selector: 'app-login-page',
@@ -19,13 +22,40 @@ import { ActivatedRoute, Router } from '@angular/router';
     ]),
   ],
 })
-export class LoginPageComponent {
-  loginButtonsStatus = false;
+export class LoginPageComponent implements OnInit, OnDestroy {
+  loginButtonsStatus?: boolean;
+  private readonly destroy$ = new Subject<void>();
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private loginButtonsService: LoginButtonsService
+  ) {}
+
+  ngOnInit() {
+    this.loginButtonsService.loginButtonsStatus
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((status) => {
+        this.loginButtonsStatus = status;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   goToLogin() {
-    this.loginButtonsStatus = true;
-    this.router.navigate(['login-form'], { relativeTo: this.activatedRoute });
+    this.loginButtonsService.loginButtonStatusHandler(true);
+    this.router.navigate(['login-form'], {
+      relativeTo: this.activatedRoute,
+    });
+  }
+
+  goToSignup() {
+    this.loginButtonsService.loginButtonStatusHandler(true);
+    this.router.navigate(['signup-form'], {
+      relativeTo: this.activatedRoute,
+    });
   }
 }

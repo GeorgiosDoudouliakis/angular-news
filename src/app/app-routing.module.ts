@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
 import { LoginFormComponent } from './login-page/login-form/login-form.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { SignupFormComponent } from './login-page/signup-form/signup-form.component';
 import { MainPageComponent } from './main-page/main-page.component';
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
       {
         path: 'login-form',
         component: LoginFormComponent,
+      },
+      {
+        path: 'signup-form',
+        component: SignupFormComponent,
       },
     ],
   },

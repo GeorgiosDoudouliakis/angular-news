@@ -1,0 +1,34 @@
+<section class="form-container">
+  <h3>Sign Up</h3>
+  <form>
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input type="password" matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Confirm Password</mat-label>
+      <input type="password" matInput />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">SIGN UP</button>
+  </form>
+  <button mat-stroked-button class="goback-form-btn" (click)="goBack()">
+    Go Back
+  </button>
+</section>
