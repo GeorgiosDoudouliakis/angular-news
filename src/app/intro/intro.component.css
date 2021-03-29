@@ -36,22 +36,8 @@
 
 button {
   display: block;
-  font-size: 1em;
-  padding: 0.5em;
+  width: 120px;
   margin: auto;
-  outline: none;
-  border: 1px solid #000;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-}
-
-button:hover {
-  box-shadow: 5px 5px 20px #000000;
-}
-
-button:active {
-  transform: scale(0.98);
 }
 
 @media (min-width: 768px) {
