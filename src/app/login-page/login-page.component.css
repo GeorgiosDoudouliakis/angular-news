@@ -10,6 +10,11 @@
   text-align: center;
 }
 
-.sign-up-btn {
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-btn {
   margin-bottom: 1em;
 }

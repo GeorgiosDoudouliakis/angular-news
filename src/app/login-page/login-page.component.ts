@@ -6,6 +6,7 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -18,4 +19,13 @@ import { Component } from '@angular/core';
     ]),
   ],
 })
-export class LoginPageComponent {}
+export class LoginPageComponent {
+  loginButtonsStatus = false;
+
+  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+
+  goToLogin() {
+    this.loginButtonsStatus = true;
+    this.router.navigate(['login-form'], { relativeTo: this.activatedRoute });
+  }
+}

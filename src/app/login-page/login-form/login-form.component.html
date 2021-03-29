@@ -1,0 +1,19 @@
+<section class="login-form-container">
+  <h3>Log In</h3>
+  <form>
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input matInput />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input type="password" matInput />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">LOG IN</button>
+  </form>
+  <button mat-stroked-button class="goback-btn" (click)="goBack()">
+    Go Back
+  </button>
+</section>

@@ -26,6 +26,7 @@ import { SingleNewComponent } from './main-page/news-container/single-new/single
 import { PaginationComponent } from './main-page/pagination/pagination.component';
 import { SearchFormComponent } from './main-page/search-form/search-form.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { LoginFormComponent } from './login-page/login-form/login-form.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     IntroComponent,
     MainPageComponent,
     LoginPageComponent,
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule,

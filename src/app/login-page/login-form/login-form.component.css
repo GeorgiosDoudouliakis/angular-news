@@ -1,0 +1,15 @@
+.login-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.goback-btn {
+  width: 100%;
+}
