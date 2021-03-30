@@ -16,6 +16,12 @@ body {
   scroll-behavior: smooth;
 }
 
+.success-msg {
+  text-align: center;
+  color: #fff;
+  background: rgb(28, 121, 28);
+}
+
 /* Form Style */
 .form-container {
   display: flex;

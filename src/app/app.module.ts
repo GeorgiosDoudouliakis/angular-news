@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import {
@@ -61,6 +62,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     MatMenuModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     BrowserAnimationsModule,
   ],
   providers: [],

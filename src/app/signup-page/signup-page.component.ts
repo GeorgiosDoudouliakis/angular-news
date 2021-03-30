@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { fadeIn } from '../animations/fade-in.animations';
 import { User } from '../models/user.model';
@@ -18,7 +19,11 @@ export class SignupPageComponent implements OnInit {
   hideConfirmedPass = true;
   signupUserLoading = false;
 
-  constructor(private router: Router, private usersService: UsersService) {}
+  constructor(
+    private router: Router,
+    private usersService: UsersService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.signupForm = new FormGroup(
@@ -77,6 +82,13 @@ export class SignupPageComponent implements OnInit {
       .signupUser(user)
       .toPromise()
       .then(() => (this.signupUserLoading = false))
-      .then(() => this.router.navigate(['/main-page']));
+      .then(() => this.router.navigate(['/main-page']))
+      .then(() => {
+        this._snackBar.open('You have successfully signed in!', '', {
+          duration: 3000,
+          panelClass: ['success-msg'],
+          verticalPosition: 'top',
+        });
+      });
   }
 }

@@ -77,7 +77,13 @@
     <span *ngIf="signupForm.errors?.differentPasswords" class="error"
       >Passwords don't match!</span
     >
-    <button mat-raised-button color="primary" class="submit-btn">
+    <button
+      mat-raised-button
+      color="primary"
+      class="submit-btn"
+      [style.cursor]="signupForm.invalid ? 'no-drop' : ''"
+      [disabled]="signupForm.invalid"
+    >
       <span *ngIf="!signupUserLoading">SIGN UP</span>
       <mat-spinner
         *ngIf="signupUserLoading"
