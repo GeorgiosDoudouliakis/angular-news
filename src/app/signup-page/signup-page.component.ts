@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fadeIn } from '../animations/fade-in.animations';
+import { User } from '../models/user.model';
+import { UsersService } from '../services/users.service';
 import { PasswordValidator } from '../validators/password.validator';
 
 @Component({
@@ -14,8 +16,9 @@ export class SignupPageComponent implements OnInit {
   signupForm!: FormGroup;
   hidePass = true;
   hideConfirmedPass = true;
+  signupUserLoading = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private usersService: UsersService) {}
 
   ngOnInit() {
     this.signupForm = new FormGroup(
@@ -61,7 +64,19 @@ export class SignupPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  submitSignUp() {
-    console.log(this.signupForm.getError('differentPasswords'));
+  signUp() {
+    const user: User = {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      username: this.username,
+      password: this.password,
+    };
+
+    this.signupUserLoading = true;
+    this.usersService
+      .signupUser(user)
+      .toPromise()
+      .then(() => (this.signupUserLoading = false))
+      .then(() => this.router.navigate(['/main-page']));
   }
 }
