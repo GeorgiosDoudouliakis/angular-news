@@ -29,10 +29,6 @@ form {
   flex-direction: column;
   margin-bottom: 20px;
 }
-
-.goback-form-btn {
-  width: 100%;
-}
 /* End of Form Styles */
 
 /* Overwriting Material styles */

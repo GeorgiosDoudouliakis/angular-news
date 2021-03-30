@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IntroComponent } from './intro/intro.component';
-import { LoginFormComponent } from './login-page/login-form/login-form.component';
 import { LoginPageComponent } from './login-page/login-page.component';
-import { SignupFormComponent } from './login-page/signup-form/signup-form.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { SignupPageComponent } from './signup-page/signup-page.component';
 
 const routes: Routes = [
   {
@@ -13,18 +12,12 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'login-page',
+    path: 'login',
     component: LoginPageComponent,
-    children: [
-      {
-        path: 'login-form',
-        component: LoginFormComponent,
-      },
-      {
-        path: 'signup-form',
-        component: SignupFormComponent,
-      },
-    ],
+  },
+  {
+    path: 'signup',
+    component: SignupPageComponent,
   },
   {
     path: 'main-page',

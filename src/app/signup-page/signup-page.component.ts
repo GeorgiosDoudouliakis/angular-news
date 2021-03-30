@@ -6,11 +6,12 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css'],
+  selector: 'app-signup-page',
+  templateUrl: './signup-page.component.html',
+  styleUrls: ['./signup-page.component.css'],
   animations: [
     trigger('fadeIn', [
       state('in', style({ opacity: 1 })),
@@ -18,4 +19,10 @@ import { Component } from '@angular/core';
     ]),
   ],
 })
-export class LoginPageComponent {}
+export class SignupPageComponent {
+  constructor(private router: Router) {}
+
+  goBack() {
+    this.router.navigate(['/login']);
+  }
+}

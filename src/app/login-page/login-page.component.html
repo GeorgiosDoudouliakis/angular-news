@@ -1,18 +1,5 @@
 <section @fadeIn class="login-page-container">
   <h2>Welcome to Login Page</h2>
   <p>Join us today so you can see all the latest news!</p>
-  <section class="login-buttons" *ngIf="!loginButtonsStatus">
-    <button
-      mat-raised-button
-      color="primary"
-      class="login-btn"
-      (click)="goToLogin()"
-    >
-      Log In
-    </button>
-    <button mat-stroked-button color="primary" (click)="goToSignup()">
-      Sign Up
-    </button>
-  </section>
-  <router-outlet></router-outlet>
+  <app-login-form></app-login-form>
 </section>

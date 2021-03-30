@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginButtonsService } from 'src/app/services/login-buttons.service';
 
 @Component({
   selector: 'app-login-form',
@@ -8,16 +7,13 @@ import { LoginButtonsService } from 'src/app/services/login-buttons.service';
   styleUrls: ['./login-form.component.css'],
 })
 export class LoginFormComponent {
-  constructor(
-    private loginButtonsService: LoginButtonsService,
-    private router: Router
-  ) {}
+  constructor(private router: Router) {}
 
   goToNews() {
     this.router.navigate(['/main-page']);
   }
 
-  goBack() {
-    this.loginButtonsService.goToLoginPage();
+  goToSignup() {
+    this.router.navigate(['/signup']);
   }
 }
