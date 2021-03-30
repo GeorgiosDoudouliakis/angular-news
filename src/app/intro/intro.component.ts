@@ -1,36 +1,12 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { fadeOut } from '../animations/fade-out.animations';
 
 @Component({
   selector: 'app-intro',
   templateUrl: './intro.component.html',
   styleUrls: ['./intro.component.css'],
-  animations: [
-    trigger('fadeOut', [
-      state(
-        'opened',
-        style({
-          height: '100%',
-          opacity: 1,
-        })
-      ),
-      state(
-        'closed',
-        style({
-          height: 0,
-          opacity: 0,
-        })
-      ),
-      transition('opened => closed', animate(500)),
-    ]),
-  ],
+  animations: fadeOut,
 })
 export class IntroComponent {
   animationStatus = 'opened';

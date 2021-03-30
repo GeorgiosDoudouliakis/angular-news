@@ -1,21 +1,10 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { Component } from '@angular/core';
+import { fadeIn } from '../animations/fade-in.animations';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css'],
-  animations: [
-    trigger('fadeIn', [
-      state('in', style({ opacity: 1 })),
-      transition('void => *', [style({ opacity: 0 }), animate(550)]),
-    ]),
-  ],
+  animations: fadeIn,
 })
 export class LoginPageComponent {}
