@@ -1,3 +1,16 @@
+mat-form-field {
+  margin-bottom: 1em;
+}
+
+.submit-btn {
+  margin-top: 19.92px;
+}
+
 .go-back-btn {
   width: 180px;
+}
+
+.error {
+  text-align: center;
+  color: rgb(218, 0, 0);
 }
