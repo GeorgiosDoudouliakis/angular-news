@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
 @Injectable({
@@ -7,6 +8,22 @@ import { User } from '../models/user.model';
 })
 export class UsersService {
   constructor(private http: HttpClient) {}
+
+  getUsers() {
+    return this.http
+      .get<User[]>(
+        'https://ng-breaking-news-gr-users-default-rtdb.europe-west1.firebasedatabase.app/users.json'
+      )
+      .pipe(
+        map((response) => {
+          const usersArr = [];
+          for (let key in response) {
+            usersArr.push({ ...response[key], id: key });
+          }
+          return usersArr;
+        })
+      );
+  }
 
   signupUser(user: User) {
     return this.http.post<User>(

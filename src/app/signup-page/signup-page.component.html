@@ -1,10 +1,10 @@
 <section @fadeIn class="form-container">
   <h2>Sign Up</h2>
-  <form [formGroup]="signupForm" (ngSubmit)="signUp()">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>First Name</mat-label>
       <input matInput formControlName="firstName" />
-      <mat-error *ngIf="!firstName.required">
+      <mat-error *ngIf="!firstName.valid">
         First Name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
@@ -12,7 +12,7 @@
     <mat-form-field>
       <mat-label>Last Name</mat-label>
       <input matInput formControlName="lastName" />
-      <mat-error *ngIf="!lastName.required">
+      <mat-error *ngIf="!lastName.valid">
         Last Name is <strong>required</strong>
       </mat-error>
     </mat-form-field>
@@ -20,9 +20,9 @@
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input matInput formControlName="username" />
-      <mat-error *ngIf="!username.required">
-        Username is <strong>required</strong>
-      </mat-error>
+      <mat-error *ngIf="username.invalid && username.dirty"
+        >{{ username }} already exists!</mat-error
+      >
     </mat-form-field>
 
     <mat-form-field hintLabel="Min 6 characters">
@@ -40,11 +40,12 @@
         (click)="hidePass = !hidePass"
         [attr.aria-label]="'Hide password'"
         [attr.aria-pressed]="hidePass"
+        type="button"
       >
         <mat-icon>{{ hidePass ? "visibility_off" : "visibility" }}</mat-icon>
       </button>
       <mat-hint align="end">{{ input.value?.length || 0 }} characters</mat-hint>
-      <mat-error *ngIf="!password.required && !password.minLength">
+      <mat-error *ngIf="!password.valid && !password.minLength">
         Password must have <strong>at least 6 characters</strong>
       </mat-error>
     </mat-form-field>
@@ -63,13 +64,14 @@
         (click)="hideConfirmedPass = !hideConfirmedPass"
         [attr.aria-label]="'Hide password'"
         [attr.aria-pressed]="hideConfirmedPass"
+        type="button"
       >
         <mat-icon>{{
           hideConfirmedPass ? "visibility_off" : "visibility"
         }}</mat-icon>
       </button>
       <mat-error
-        *ngIf="!confirmedPassword.required && !confirmedPassword.minLength"
+        *ngIf="!confirmedPassword.valid && !confirmedPassword.minLength"
       >
         Password must have <strong>at least 6 characters</strong>
       </mat-error>

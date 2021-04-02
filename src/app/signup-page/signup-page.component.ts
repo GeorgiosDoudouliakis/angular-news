@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { fadeIn } from '../animations/fade-in.animations';
 import { User } from '../models/user.model';
 import { UsersService } from '../services/users.service';
 import { PasswordValidator } from '../validators/password.validator';
+import { forbiddenUsernameValidator } from '../validators/username.validator';
 
 @Component({
   selector: 'app-signup-page',
@@ -18,6 +21,7 @@ export class SignupPageComponent implements OnInit {
   hidePass = true;
   hideConfirmedPass = true;
   signupUserLoading = false;
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -30,8 +34,9 @@ export class SignupPageComponent implements OnInit {
       {
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
-        username: new FormControl('', Validators.required),
-
+        username: new FormControl('', Validators.required, [
+          forbiddenUsernameValidator(this.usersService),
+        ]),
         password: new FormControl('', [
           Validators.required,
           Validators.minLength(6),
@@ -43,6 +48,11 @@ export class SignupPageComponent implements OnInit {
       },
       PasswordValidator
     );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   get firstName() {
@@ -69,26 +79,34 @@ export class SignupPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  signUp() {
-    const user: User = {
+  onSubmit() {
+    this.signupUserLoading = true;
+    this.signupUserAndShowNews({
       firstName: this.firstName,
       lastName: this.lastName,
       username: this.username,
       password: this.password,
-    };
+    });
+  }
 
-    this.signupUserLoading = true;
+  private signupUserAndShowNews(user: User) {
     this.usersService
       .signupUser(user)
-      .toPromise()
-      .then(() => (this.signupUserLoading = false))
-      .then(() => this.router.navigate(['/main-page']))
-      .then(() => {
-        this._snackBar.open('You have successfully signed in!', '', {
-          duration: 3000,
-          panelClass: ['success-msg'],
-          verticalPosition: 'top',
-        });
-      });
+      .pipe(
+        finalize(() => {
+          this.signupUserLoading = false;
+          this.openSnackbar();
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((res) => this.router.navigate(['/main-page']));
+  }
+
+  private openSnackbar() {
+    this._snackBar.open('You have successfully signed in!', undefined, {
+      duration: 3000,
+      panelClass: 'success-msg',
+      verticalPosition: 'top',
+    });
   }
 }
