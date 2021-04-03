@@ -20,7 +20,7 @@
     <mat-form-field>
       <mat-label>Username</mat-label>
       <input matInput formControlName="username" />
-      <mat-error *ngIf="username.invalid && username.dirty"
+      <mat-error *ngIf="!username.errors?.usernameAvailabe && username"
         >{{ username }} already exists!</mat-error
       >
     </mat-form-field>
@@ -83,8 +83,8 @@
       mat-raised-button
       color="primary"
       class="submit-btn"
-      [style.cursor]="signupForm.invalid ? 'no-drop' : ''"
-      [disabled]="signupForm.invalid"
+      [style.cursor]="signupForm.invalid || signupForm.pending ? 'no-drop' : ''"
+      [disabled]="signupForm.invalid || signupForm.pending"
     >
       <span *ngIf="!signupUserLoading">SIGN UP</span>
       <mat-spinner

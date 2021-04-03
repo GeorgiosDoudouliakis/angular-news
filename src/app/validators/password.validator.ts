@@ -1,8 +1,8 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 
 export function PasswordValidator(
   control: AbstractControl
-): { [key: string]: boolean } | null {
+): ValidationErrors | null {
   const password = control.get('password');
   const confirmedPassword = control.get('confirmedPassword');
   if (!password?.dirty || !confirmedPassword?.dirty) {
