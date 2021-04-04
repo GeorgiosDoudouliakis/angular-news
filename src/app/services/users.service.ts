@@ -11,7 +11,14 @@ export class UsersService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): void {
+  signupUser(user: User) {
+    return this.http.post<User>(
+      'https://ng-breaking-news-gr-users-default-rtdb.europe-west1.firebasedatabase.app/users.json',
+      user
+    );
+  }
+
+  private getUsers(): void {
     this.http
       .get<User[]>(
         'https://ng-breaking-news-gr-users-default-rtdb.europe-west1.firebasedatabase.app/users.json'
@@ -30,12 +37,5 @@ export class UsersService {
           this.users.push(user);
         }
       });
-  }
-
-  signupUser(user: User) {
-    return this.http.post<User>(
-      'https://ng-breaking-news-gr-users-default-rtdb.europe-west1.firebasedatabase.app/users.json',
-      user
-    );
   }
 }
