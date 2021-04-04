@@ -32,7 +32,7 @@ export class SignupPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.initializeForm();
+    this.initializeSignupForm();
 
     this.usersService.getUsers().subscribe((usersData) => {
       for (let user of usersData) {
@@ -80,7 +80,7 @@ export class SignupPageComponent implements OnInit {
     });
   }
 
-  private initializeForm() {
+  private initializeSignupForm() {
     this.signupForm = new FormGroup(
       {
         firstName: new FormControl('', Validators.required),
