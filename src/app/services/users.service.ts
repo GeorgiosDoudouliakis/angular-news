@@ -7,10 +7,12 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class UsersService {
+  users: User[] = [];
+
   constructor(private http: HttpClient) {}
 
-  getUsers() {
-    return this.http
+  getUsers(): void {
+    this.http
       .get<User[]>(
         'https://ng-breaking-news-gr-users-default-rtdb.europe-west1.firebasedatabase.app/users.json'
       )
@@ -22,7 +24,12 @@ export class UsersService {
           }
           return usersArr;
         })
-      );
+      )
+      .subscribe((usersData: User[]) => {
+        for (let user of usersData) {
+          this.users.push(user);
+        }
+      });
   }
 
   signupUser(user: User) {

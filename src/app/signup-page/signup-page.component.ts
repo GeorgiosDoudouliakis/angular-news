@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { fadeIn } from '../animations/fade-in.animations';
@@ -21,24 +21,16 @@ export class SignupPageComponent implements OnInit {
   hidePass = true;
   hideConfirmedPass = true;
   signupUserLoading = false;
-  users: User[] = [];
   private readonly destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private usersService: UsersService,
     private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
     this.initializeSignupForm();
-
-    this.usersService.getUsers().subscribe((usersData) => {
-      for (let user of usersData) {
-        this.users.push(user);
-      }
-    });
   }
 
   ngOnDestroy() {
@@ -88,7 +80,7 @@ export class SignupPageComponent implements OnInit {
         username: new FormControl(
           '',
           Validators.required,
-          forbiddenUsernameValidator(this.users)
+          forbiddenUsernameValidator(this.usersService.users)
         ),
         password: new FormControl('', [
           Validators.required,
