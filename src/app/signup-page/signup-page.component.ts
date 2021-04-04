@@ -8,7 +8,7 @@ import { fadeIn } from '../animations/fade-in.animations';
 import { User } from '../models/user.model';
 import { UsersService } from '../services/users.service';
 import { PasswordValidator } from '../validators/password.validator';
-import { forbiddenUsernameValidator } from '../validators/username.validator';
+import { usernameAvailabilityValidator } from '../validators/username-availability.validator';
 
 @Component({
   selector: 'app-signup-page',
@@ -18,6 +18,7 @@ import { forbiddenUsernameValidator } from '../validators/username.validator';
 })
 export class SignupPageComponent implements OnInit {
   signupForm!: FormGroup;
+  users: User[] = [];
   hidePass = true;
   hideConfirmedPass = true;
   signupUserLoading = false;
@@ -31,6 +32,12 @@ export class SignupPageComponent implements OnInit {
 
   ngOnInit() {
     this.initializeSignupForm();
+
+    this.usersService.getUsers().subscribe((usersData: User[]) => {
+      for (let user of usersData) {
+        this.users.push(user);
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -80,7 +87,7 @@ export class SignupPageComponent implements OnInit {
         username: new FormControl(
           '',
           Validators.required,
-          forbiddenUsernameValidator(this.usersService.users)
+          usernameAvailabilityValidator(this.users)
         ),
         password: new FormControl('', [
           Validators.required,

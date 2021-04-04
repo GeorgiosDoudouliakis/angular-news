@@ -1,25 +1,55 @@
 <section class="form-container">
-  <form>
+  <form [formGroup]="loginForm">
     <mat-form-field>
       <mat-label>Username</mat-label>
-      <input matInput />
+      <input matInput formControlName="username" />
+      <!-- <mat-error *ngIf="!username.errors?.availabe && username"
+        >wrong username</mat-error
+      > -->
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input type="password" matInput />
+      <input
+        type="password"
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+      />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword"
+        type="button"
+      >
+        <mat-icon>{{
+          hidePassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
+      </button>
+      <!-- <mat-error *ngIf="!password.errors?.availabe && password"
+        >wrong password</mat-error
+      > -->
     </mat-form-field>
 
     <button
       mat-raised-button
       color="primary"
-      type="submit"
+      class="submit-btn"
+      [style.cursor]="loginForm.invalid || loginForm.pending ? 'no-drop' : ''"
+      [disabled]="loginForm.invalid || loginForm.pending"
       (click)="goToNews()"
     >
-      LOG IN
+      <span *ngIf="!loginUserLoading">LOG IN</span>
+      <mat-spinner
+        *ngIf="loginUserLoading"
+        color="accent"
+        diameter="25"
+      ></mat-spinner>
     </button>
   </form>
-  <button mat-stroked-button (click)="goToSignup()">
+  <button mat-stroked-button class="no-acc-btn" (click)="goToSignup()">
     I don't have an account!
   </button>
 </section>

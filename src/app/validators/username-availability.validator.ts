@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { debounceTime, map, take } from 'rxjs/operators';
 import { User } from '../models/user.model';
 
-export function forbiddenUsernameValidator(users: User[]): AsyncValidatorFn {
+export function usernameAvailabilityValidator(users: User[]): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
     return control.valueChanges.pipe(
       debounceTime(600),

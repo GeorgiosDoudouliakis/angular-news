@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { FormValues } from '../models/form-values.model';
 import { News } from '../models/news.model';
+import { SearchFormValues } from '../models/search-form-values.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +12,10 @@ export class NewsService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNews(pageNum: number = 1, formChanges?: FormValues): Observable<News> {
+  fetchNews(
+    pageNum: number = 1,
+    formChanges?: SearchFormValues
+  ): Observable<News> {
     let searchParams = new HttpParams()
       .set('country', 'gr')
       .set('apiKey', this.apiKey)

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FormValues } from '../../models/form-values.model';
+import { SearchFormValues } from '../../models/search-form-values.model';
 import { SingleNew } from '../../models/single-new.model';
 import { NewsService } from '../../services/news.service';
 
@@ -43,7 +43,7 @@ export class NewsContainerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getNews(pageNumber: number, formChanges?: FormValues) {
+  private getNews(pageNumber: number, formChanges?: SearchFormValues) {
     this.loading = true;
     this.newsService
       .fetchNews(pageNumber, formChanges)
